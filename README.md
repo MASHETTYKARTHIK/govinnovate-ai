@@ -6,7 +6,398 @@
 
 To make it easy for you to get started with GitLab, here's a list of recommended next steps.
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+Already a pro? Just edit this # GovInnovate AI
+
+**AI-Powered Government Innovation Engine**
+
+Rapidly transform government problem statements into actionable, evidence-backed innovation recommendations using AI-augmented discovery and synthesis.
+
+---
+
+## 🎯 Vision
+
+Every government officer, from transport to health to environment, can access global evidence-backed solutions within minutes instead of months.
+
+## 🚀 Mission
+
+Accelerate government innovation adoption by converting local problem statements into prioritized, evidence-backed, and operational roadmaps using an AI-first retrieval + reasoning platform.
+
+---
+
+## 📋 What's Included
+
+This repository contains the **POC (Proof of Concept) and SpecKit** for GovInnovate AI — comprehensive planning and design documentation *before* full implementation.
+
+### 📁 Repository Structure
+
+```
+.
+├── README.md                          ← This file
+├── AGENTS.md                          ← Agent specifications (to be created)
+├── USER_MANUAL.md                     ← How to use the platform (Phase 2)
+├── CONTRIBUTING.md                    ← Development guidelines
+├── .specify/
+│   ├── memory/
+│   │   └── constitution.md            ← Project principles & standards
+│   ├── scripts/bash/                  ← Lifecycle automation scripts (Phase 2)
+│   └── templates/                     ← Spec/plan/task templates
+├── specs/
+│   └── 001-govinnovate-ai/
+│       ├── spec.md                    ← Product specification (WHAT & WHY)
+│       ├── clarify.md                 ← Q&A, assumptions, clarifications
+│       ├── plan.md                    ← Technical blueprint & architecture
+│       ├── tasks.md                   ← Implementation tasks (ordered, parallelizable)
+│       ├── data-model.md              ← Database schema, ER diagram (to be created)
+│       └── research.md                ← Background research, competitive analysis (to be created)
+├── poc/
+│   └── README.md                      ← POC documentation & demo guide
+├── docs/
+│   ├── spec-kit.md                    ← Complete SpecKit (consolidated)
+│   ├── ARCHITECTURE.md                ← Architecture diagrams & flow (to be created)
+│   ├── API.md                         ← API reference (to be created)
+│   └── OPERATIONS.md                  ← Deployment & operations (Phase 2)
+├── datasets/
+│   ├── research/                      ← Research papers (CSVs, metadata)
+│   ├── case-studies/                  ← Case study database
+│   ├── startups/                      ← Startup/vendor database
+│   └── eval/                          ← Evaluation test sets (Phase 2)
+├── prompts/
+│   ├── system/                        ← System prompt templates
+│   ├── few-shots/                     ← Few-shot examples
+│   └── agents/                        ← Agent-specific prompts
+├── architecture/
+│   ├── system-architecture.md         ← Component diagram descriptions
+│   ├── data-flow.md                   ← Data flow diagrams
+│   └── diagrams/                      ← Mermaid/PlantUML source
+├── design/
+│   ├── wireframes.md                  ← UI wireframes (textual + links)
+│   ├── dashboard-design.md            ← Dashboard layouts
+│   └── design-system.md               ← UI component specs (Phase 2)
+├── LICENSE                            ← MIT (or government-friendly open license)
+└── NOTICE.md                          ← Data provenance & attributions
+```
+
+---
+
+## 📚 Key Documents
+
+### For Product Managers & Stakeholders
+- **Start here:** `specs/001-govinnovate-ai/spec.md` — Product requirements, personas, user stories.
+- **Strategy:** `docs/spec-kit.md` — Complete product specification + business logic.
+- **POC Overview:** `poc/README.md` — What's being built in 24–48 hours.
+
+### For Technical Architects
+- **Stack & Design:** `specs/001-govinnovate-ai/plan.md` — Technology choices, system architecture, deployment.
+- **Database Design:** `specs/001-govinnovate-ai/data-model.md` (to be created).
+- **Architecture Details:** `docs/ARCHITECTURE.md` (to be created).
+
+### For Engineers
+- **Tasks & Roadmap:** `specs/001-govinnovate-ai/tasks.md` — Ordered, parallelizable tasks (175 SP, 4 weeks).
+- **Agents:** `AGENTS.md` (to be created) — Agent specifications, prompts, orchestration.
+- **Setup:** See "Getting Started" below.
+
+### For Clarity & Decisions
+- **Q&A:** `specs/001-govinnovate-ai/clarify.md` — Open questions, assumptions, clarifications.
+- **Constitution:** `.specify/memory/constitution.md` — Project principles, quality standards, governance.
+
+---
+
+## 🔬 POC (24–48 Hours)
+
+### Objective
+Rapidly validate GovInnovate AI's core proposition:
+- User enters problem statement → System generates actionable report with evidence, cost estimates, and impact predictions → User downloads PDF.
+
+### Scope
+- **Input:** Plain-text problem (e.g., "Traffic congestion in Hyderabad").
+- **Output:** Problem analysis, 3 case studies, 3 research papers, 5 startups, 3 policy recommendations, 6–12 month roadmap, cost estimate, impact prediction.
+- **Tech:** FastAPI backend, React frontend, OpenAI GPT-4, FAISS vector DB, local dataset (~20–30 docs).
+- **Timeline:** 2–4 weeks (4–8 engineers in parallel).
+
+### Demo Flow
+1. Upload problem statement (text + optional metadata).
+2. System analyzes problem using AI; searches for relevant evidence.
+3. LLM synthesizes findings into structured report.
+4. User views dashboard with top recommendations + scores.
+5. User downloads report (PDF/Markdown) with sources.
+
+### Success Criteria (POC)
+- ✅ End-to-end latency < 5 minutes.
+- ✅ ≥3/5 recommendations deemed relevant by domain experts.
+- ✅ 100% of recommendations include source links.
+- ✅ User satisfaction ≥ 4/5 from pilot officials.
+- ✅ Zero hallucinations (LLM outputs grounded in retrieved sources).
+
+**For detailed POC guide, see:** `poc/README.md`
+
+---
+
+## 🏗️ Architecture (High-Level)
+
+```
+┌─────────────────────────────┐
+│   React Frontend            │ (Upload form, dashboard, report viewer)
+└──────────────┬──────────────┘
+               │ HTTP/JSON
+               ▼
+┌─────────────────────────────────────────────────┐
+│   FastAPI Backend (Orchestrator)                │
+│   - Problem Analyzer Agent                      │
+│   - Retrieval Coordinator Agent                 │
+│   - Report Generator Agent                      │
+└──────────────┬──────────────────────────────────┘
+               │
+       ┌───────┼───────┐
+       ▼       ▼       ▼
+┌────────┐ ┌────────┐ ┌────────┐
+│ OpenAI │ │ FAISS  │ │Postgres│
+│ GPT-4  │ │ Vector │ │  DB    │
+│ API    │ │  DB    │ │        │
+└────────┘ └────────┘ └────────┘
+```
+
+**For detailed architecture, see:** `specs/001-govinnovate-ai/plan.md`
+
+---
+
+## 🛠️ Technology Stack (POC)
+
+| Component | Technology | Rationale |
+|-----------|-----------|-----------|
+| **Backend** | Python 3.10 + FastAPI | Fast iteration; async support; ML-friendly. |
+| **Frontend** | React 18 + TypeScript | Modern UX; responsive. |
+| **LLM** | OpenAI GPT-4 API | State-of-the-art; reliable. |
+| **Embeddings** | OpenAI `text-embedding-3-large` | High quality; fixed model (reproducible). |
+| **Vector DB** | FAISS (in-memory) | No external dependency; sufficient for POC. |
+| **Metadata DB** | PostgreSQL (optional) | Structured data; ACID. |
+| **Storage** | Local filesystem / S3 | Documents, PDFs, exports. |
+| **Reporting** | Jinja2 + wkhtmltopdf | PDF generation from templates. |
+| **Testing** | pytest | Unit + integration tests. |
+
+**For Phase 2+:** Transition to Milvus, RDS, Kubernetes, multi-provider LLMs.
+
+---
+
+## 📋 7-Step Workflow
+
+This project follows a structured specification-first workflow:
+
+1. **Step 1: Bootstrap** — Create directory structure; version control.
+2. **Step 2: Constitution** — Define project principles & quality standards (`.specify/memory/constitution.md`).
+3. **Step 3: Specify** — Document requirements, personas, user stories (`specs/001-govinnovate-ai/spec.md`).
+4. **Step 4: Clarify** — Fill gaps via structured Q&A (`specs/001-govinnovate-ai/clarify.md`).
+5. **Step 5: Plan** — Create tech blueprint, architecture, stack (`specs/001-govinnovate-ai/plan.md`).
+6. **Step 6: Tasks** — Break plan into ordered, parallelizable tasks (`specs/001-govinnovate-ai/tasks.md`).
+7. **Step 7: Implement** — AI executes tasks systematically (Phase 2+).
+
+**Current Status:** ✅ Steps 1–6 complete (POC & SpecKit ready).
+
+---
+
+## 🚀 Getting Started (Phase 2)
+
+### Prerequisites
+- Python 3.10+
+- Node.js 18+
+- Docker (optional, for containerization)
+- OpenAI API key
+
+### Local Setup (POC Backend + Frontend)
+
+```bash
+# Clone repo
+git clone <repo-url>
+cd govinnovate-ai
+
+# Backend setup
+cd backend
+python -m venv venv
+source venv/bin/activate  # or `venv\Scripts\activate` on Windows
+pip install -r requirements.txt
+
+# Configure environment
+cp .env.template .env
+# Edit .env and add your OpenAI API key
+
+# Run database migrations (if using PostgreSQL)
+alembic upgrade head
+
+# Start backend
+uvicorn src.api.main:app --reload
+
+# Frontend setup (in separate terminal)
+cd frontend
+npm install
+npm start
+
+# Open browser
+open http://localhost:3000
+```
+
+### Docker Compose (All Services)
+
+```bash
+# Start all services (backend, frontend, vector DB, metadata DB)
+docker-compose up -d
+
+# Check logs
+docker-compose logs -f
+
+# Stop services
+docker-compose down
+```
+
+---
+
+## 📖 Documentation Roadmap
+
+| Document | Status | Purpose |
+|----------|--------|---------|
+| `spec.md` | ✅ Complete | Product requirements & user stories. |
+| `clarify.md` | ✅ Complete | Q&A, assumptions, clarifications. |
+| `plan.md` | ✅ Complete | Tech blueprint, architecture, stack. |
+| `tasks.md` | ✅ Complete | Ordered implementation tasks. |
+| `constitution.md` | ✅ Complete | Project principles & standards. |
+| `poc/README.md` | ✅ Complete | POC overview & demo guide. |
+| `spec-kit.md` | ✅ Complete | Consolidated SpecKit. |
+| `AGENTS.md` | 🔲 Phase 2 | Agent specifications & prompts. |
+| `ARCHITECTURE.md` | 🔲 Phase 2 | Detailed architecture diagrams. |
+| `API.md` | 🔲 Phase 2 | Complete API reference. |
+| `USER_MANUAL.md` | 🔲 Phase 2 | User guide for government officials. |
+| `OPERATIONS.md` | 🔲 Phase 2 | Deployment, monitoring, ops runbook. |
+
+---
+
+## 🎯 Success Metrics
+
+### POC Success
+| Metric | Target |
+|--------|--------|
+| **Latency** | < 5 minutes (end-to-end) |
+| **Relevance** | ≥ 60% top-5 docs relevant |
+| **Provenance** | 100% of recommendations sourced |
+| **User Satisfaction** | ≥ 4/5 from pilot officials |
+
+### Phase 2 Success
+| Metric | Target |
+|--------|--------|
+| **Uptime** | 99.9% SLA |
+| **Latency (p95)** | < 10 seconds |
+| **Cost per Report** | < $1 |
+| **Agencies Adopting** | 20+ by end Year 1 |
+
+---
+
+## 🤝 Contributing
+
+See `CONTRIBUTING.md` for development guidelines, code standards, and PR process.
+
+### Code Quality Standards
+- **Python:** PEP 8 + Black + Flake8 + type hints (mypy).
+- **TypeScript:** Strict mode + ESLint + Prettier.
+- **Testing:** ≥80% coverage (core modules).
+- **Documentation:** Every function, API endpoint documented.
+
+---
+
+## 📜 License
+
+[Choose: MIT, Apache 2.0, or government-friendly open license]
+
+---
+
+## ⚖️ Governance & Decision-Making
+
+### Steering Committee (Monthly)
+- Product Lead (vision & priorities)
+- Tech Lead (architecture & feasibility)
+- Domain Expert (government policy)
+- Finance/Operations (budget & timeline)
+
+### Sprint Planning (Bi-weekly)
+- Prioritize backlog by impact + feasibility.
+- Assign tasks; monitor velocity.
+- Review progress; adjust commitments.
+
+### Code Review
+- 2+ approvals required; 1 from tech lead.
+- Automated checks (linting, tests, security) must pass.
+
+---
+
+## 🔐 Security & Privacy
+
+- **Authentication:** OAuth2 (Phase 2).
+- **Encryption:** TLS for transport; at-rest encryption (Phase 2).
+- **PII Handling:** Detection + redaction on ingestion.
+- **Audit Logging:** Immutable logs of all data access.
+- **Compliance:** Roadmap for GDPR, India Data Protection Bill (Phase 2).
+
+See `.specify/memory/constitution.md` for detailed security standards.
+
+---
+
+## 📞 Support & Contact
+
+### Internal
+- **Tech Lead:** [Name] — Architecture, code review.
+- **Product Manager:** [Name] — Roadmap, user research.
+- **Domain Expert:** [Name] — Government partnerships, policy.
+
+### External
+- **Government Partners:** Weekly sync calls with pilot agencies.
+- **Community:** GitHub Issues for bug reports + feature requests.
+
+---
+
+## 📅 Roadmap
+
+### Phase 1: POC (2–4 weeks) ✅ Planning Complete
+- E2E validation; core agents; pilot-ready.
+
+### Phase 2: Production (4–6 months)
+- Scale to 1000+ documents; RBAC; multi-agent microservices; advanced costing.
+
+### Phase 3: Ecosystem (6–12 months)
+- Multi-region; 20+ government agencies; marketplace; integrations.
+
+---
+
+## ✨ Acknowledgments
+
+- **Government Partners:** [Pilot cities/agencies] for co-designing requirements.
+- **Advisors:** [Academic + industry experts] for validation.
+- **Open Source:** Built on FastAPI, React, FAISS, Milvus, and many others.
+
+---
+
+## 📝 Version & Updates
+
+| Version | Date | Status | Changes |
+|---------|------|--------|---------|
+| 1.0 | 2026-06-09 | Planning Complete | POC + SpecKit finalized; ready for Phase 2 implementation. |
+
+**Last Updated:** 2026-06-09  
+**Next Milestone:** POC delivery (2026-07-07)
+
+---
+
+## 🚀 Next Steps
+
+1. **Review & Validate:** Stakeholders review spec, clarify.md, and plan.md; provide feedback.
+2. **Secure Pilot Partners:** Finalize 2–3 government agencies for user feedback.
+3. **Team & Resourcing:** Allocate 6–8 engineers; kick off sprints.
+4. **Infrastructure Setup:** Provision AWS/GCP; configure LLM API keys.
+5. **Sprint Execution:** Follow tasks.md; weekly progress reviews.
+6. **Demo & Feedback:** 24–48 hours before EOD → gather user feedback → iterate.
+
+---
+
+**Questions?** See `specs/001-govinnovate-ai/clarify.md` for Q&A. Or reach out to the product/tech lead.
+
+---
+
+**GovInnovate AI** — Transforming government innovation, one problem statement at a time. 🌍 and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
 
 ## Add your files
 
