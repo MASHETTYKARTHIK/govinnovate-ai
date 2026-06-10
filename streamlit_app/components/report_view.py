@@ -1,20 +1,7 @@
 """Reusable report presentation components."""
 
-from __future__ import annotations
-
-try:
-    import pandas as pd
-except ModuleNotFoundError:  # pragma: no cover
-    pd = None
-
-try:
-    import plotly.graph_objects as go
-except ModuleNotFoundError:  # pragma: no cover
-    go = None
-
-
-
-
+import pandas as pd
+import plotly.graph_objects as go
 
 from backend.models.report import InnovationReport
 

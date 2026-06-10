@@ -1,7 +1,7 @@
 """Generated innovation report models."""
 
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import UTC, datetime
 
 from backend.models.evidence import Evidence
 from backend.models.problem import Problem, ProblemAnalysis
@@ -41,4 +41,4 @@ class InnovationReport:
     @classmethod
     def timestamp(cls) -> str:
         """Return a portable UTC timestamp."""
-        return datetime.now().astimezone().isoformat(timespec="seconds")
+        return datetime.now(UTC).isoformat(timespec="seconds")

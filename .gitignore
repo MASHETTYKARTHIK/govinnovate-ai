@@ -49,4 +49,3 @@ streamlit_cache/
 .vscode/
 .DS_Store
 Thumbs.db
-coverage.xml

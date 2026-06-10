@@ -9,31 +9,9 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-# Optional Streamlit: smoke tests must be able to import the module even if
-# streamlit isn't installed in the test environment.
-try:
-    import streamlit as st
-except ModuleNotFoundError:  # pragma: no cover
-    st = None
-
-
-
-# Optional heavy dependencies: keep import-time lightweight so unit/integration
-# tests can import this module even in minimal environments.
-
-try:
-    import pandas as pd
-
-except ModuleNotFoundError:  # pragma: no cover
-    pd = None
-
-
-try:
-    import plotly.express as px
-except ModuleNotFoundError:  # pragma: no cover
-    px = None
-
-
+import pandas as pd
+import plotly.express as px
+import streamlit as st
 
 from backend.models.report import InnovationReport
 from backend.repositories.dataset_repository import DatasetRepository
@@ -90,23 +68,9 @@ def sidebar() -> None:
         st.caption("Local datasets | Mock AI | SQLite")
 
 
-
-
-
-
-
-
-
-
-def current_report() -> 'InnovationReport | None':
+def current_report() -> InnovationReport | None:
     """Return the active report from session state."""
-
-    report = st.session_state.get("report")
-    if isinstance(report, InnovationReport) or report is None:
-        return report
-    # Streamlit session state can contain stale values from earlier runs.
-    return None
-
+    return st.session_state.get("report")
 
 
 def hero(eyebrow: str, title: str, description: str) -> None:
@@ -200,10 +164,7 @@ def render_upload() -> None:
             navigate("AI Analysis")
 
 
-def require_report() -> 'InnovationReport | None':
-
-
-
+def require_report() -> InnovationReport | None:
     """Prompt for an analysis when a downstream page has no report."""
     report = current_report()
     if not report:

@@ -8,8 +8,7 @@ from backend.repositories.dataset_repository import DatasetRepository
 class RetrievalCoordinator:
     """Coordinate mock-vector retrieval against local datasets."""
 
-    def __init__(self, repository=None) -> None:
-
+    def __init__(self, repository: DatasetRepository | None = None) -> None:
         self.repository = repository or DatasetRepository()
 
     def retrieve(

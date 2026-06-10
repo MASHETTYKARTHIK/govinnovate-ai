@@ -1,6 +1,7 @@
 """Local JSON dataset repository with FAISS-style mock retrieval."""
 
 import json
+from pathlib import Path
 
 from backend.config import settings
 from backend.models.evidence import Evidence
@@ -10,11 +11,7 @@ from backend.repositories.vector_index import MockFaissIndex
 class DatasetRepository:
     """Load and search all curated local JSON datasets."""
 
-    def __init__(self, dataset_path=None) -> None:
-        # Cast for Python 3.9 compatibility; the caller can omit this argument.
-        dataset_path = dataset_path
-
-        # NOTE: Python 3.9 doesn't support the `Path | None` (PEP604) syntax.
+    def __init__(self, dataset_path: Path | None = None) -> None:
         self.dataset_path = dataset_path or settings.dataset_path
         self._records = self._load_records()
         documents = [
@@ -42,9 +39,12 @@ class DatasetRepository:
                 records.append(item)
         return records
 
-    def search(self, query: str, limit: int = 12) -> tuple[Evidence, ...]:
+    def search(
+        self, query: str | tuple[str, ...], limit: int = 12
+    ) -> tuple[Evidence, ...]:
         """Rank local records using semantic-style cosine similarity."""
-        matches = self.index.search(query, limit=limit)
+        query_text = " ".join(query) if isinstance(query, tuple) else query
+        matches = self.index.search(query_text, limit=limit)
         results: list[Evidence] = []
         for index, score in matches:
             if score <= 0:
@@ -86,4 +86,3 @@ class DatasetRepository:
             category = str(record["category"])
             counts[category] = counts.get(category, 0) + 1
         return counts
-
