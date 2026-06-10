@@ -15,4 +15,6 @@ class Evidence:
     relevance: float
     location: str = "Global"
     tags: tuple[str, ...] = field(default_factory=tuple)
-    metadata: dict[str, str | int | float] = field(default_factory=dict)
+    # Avoid `|` union type syntax here to stay compatible with older runtimes.
+    metadata: dict[str, object] = field(default_factory=dict)
+
