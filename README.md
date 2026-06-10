@@ -302,7 +302,8 @@ See `CONTRIBUTING.md` for development guidelines, code standards, and PR process
 
 ## 📜 License
 
-[Choose: MIT, Apache 2.0, or government-friendly open license]
+GovInnovate AI is licensed under the [GNU Affero General Public License v3.0](LICENSE).
+See the `LICENSE` file for the full license terms.
 
 ---
 
