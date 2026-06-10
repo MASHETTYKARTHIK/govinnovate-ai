@@ -1,0 +1,17 @@
+[
+  {
+    "title": "Adaptive traffic signal control",
+    "summary": "Pilot adaptive signal timing on congested corridors and measure travel-time reliability.",
+    "source": "sample://transport/adaptive-signals"
+  },
+  {
+    "title": "Public transport priority lanes",
+    "summary": "Use dedicated priority lanes to improve bus reliability and reduce traffic congestion.",
+    "source": "sample://transport/transit-priority"
+  },
+  {
+    "title": "Digital waste collection routing",
+    "summary": "Optimize municipal waste collection routes using fill-level and route performance data.",
+    "source": "sample://waste/smart-routing"
+  }
+]
