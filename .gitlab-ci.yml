@@ -68,6 +68,10 @@ secret_scan:
     paths:
       - gitleaks-report.json
 
+
+
+
+
 generate_changelog:
   stage: security
   script:
