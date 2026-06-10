@@ -39,7 +39,9 @@ class DatasetRepository:
                 records.append(item)
         return records
 
-    def search(self, query: str | tuple[str, ...], limit: int = 12) -> tuple[Evidence, ...]:
+    def search(
+        self, query: str | tuple[str, ...], limit: int = 12
+    ) -> tuple[Evidence, ...]:
         """Rank local records using semantic-style cosine similarity."""
         query_text = " ".join(query) if isinstance(query, tuple) else query
         matches = self.index.search(query_text, limit=limit)
@@ -52,7 +54,15 @@ class DatasetRepository:
                 key: value
                 for key, value in record.items()
                 if key
-                not in {"id", "category", "title", "summary", "source", "location", "tags"}
+                not in {
+                    "id",
+                    "category",
+                    "title",
+                    "summary",
+                    "source",
+                    "location",
+                    "tags",
+                }
             }
             results.append(
                 Evidence(

@@ -10,9 +10,15 @@ def score_chart(report: InnovationReport) -> go.Figure:
     """Create a grouped score chart for recommendations."""
     figure = go.Figure()
     titles = [item.title for item in report.recommendations]
-    figure.add_bar(name="Impact", x=titles, y=[item.impact_score for item in report.recommendations])
     figure.add_bar(
-        name="Innovation", x=titles, y=[item.innovation_score for item in report.recommendations]
+        name="Impact",
+        x=titles,
+        y=[item.impact_score for item in report.recommendations],
+    )
+    figure.add_bar(
+        name="Innovation",
+        x=titles,
+        y=[item.innovation_score for item in report.recommendations],
     )
     figure.update_layout(
         barmode="group",

@@ -4,7 +4,6 @@ from html import escape
 from pathlib import Path
 import sys
 
-
 # Streamlit can execute this file with only streamlit_app/ on sys.path.
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 if str(PROJECT_ROOT) not in sys.path:
@@ -23,8 +22,13 @@ from streamlit_app.components.problem_form import render_problem_form
 from streamlit_app.components.report_view import evidence_frame, score_chart
 from streamlit_app.styles import THEME_CSS
 
-
-PAGES = ("Dashboard", "Upload Problem", "AI Analysis", "Recommendations", "Download Report")
+PAGES = (
+    "Dashboard",
+    "Upload Problem",
+    "AI Analysis",
+    "Recommendations",
+    "Download Report",
+)
 
 
 def initialize() -> None:
@@ -92,17 +96,26 @@ def render_dashboard() -> None:
     cols[0].metric("Evidence records", sum(counts.values()), "Local JSON")
     cols[1].metric("Datasets online", len(counts), "100% local")
     cols[2].metric("Reports generated", len(history), "SQLite tracked")
-    average = round(sum(row["impact_score"] for row in history) / len(history)) if history else 0
+    average = (
+        round(sum(row["impact_score"] for row in history) / len(history))
+        if history
+        else 0
+    )
     cols[3].metric("Average impact", f"{average}/100", "Across reports")
 
     left, right = st.columns([1.35, 1])
     with left:
         st.markdown("### Evidence landscape")
-        frame = pd.DataFrame({"Dataset": list(counts), "Records": list(counts.values())})
+        frame = pd.DataFrame(
+            {"Dataset": list(counts), "Records": list(counts.values())}
+        )
         chart = px.bar(frame, x="Dataset", y="Records", color="Dataset")
         chart.update_layout(
-            showlegend=False, height=340, paper_bgcolor="rgba(0,0,0,0)",
-            plot_bgcolor="rgba(0,0,0,0)", font_color="#dbe8f7",
+            showlegend=False,
+            height=340,
+            paper_bgcolor="rgba(0,0,0,0)",
+            plot_bgcolor="rgba(0,0,0,0)",
+            font_color="#dbe8f7",
         )
         st.plotly_chart(chart, width="stretch")
     with right:
@@ -137,7 +150,9 @@ def render_upload() -> None:
     )
     problem = render_problem_form()
     if problem:
-        with st.status("GovInnovate AI is building the innovation brief...", expanded=True) as status:
+        with st.status(
+            "GovInnovate AI is building the innovation brief...", expanded=True
+        ) as status:
             st.write("Structuring the challenge and extracting decision signals")
             st.write("Searching the local FAISS-style evidence index")
             report = AnalysisOrchestrator().run(problem)
@@ -161,7 +176,11 @@ def require_report() -> InnovationReport | None:
 
 def render_analysis() -> None:
     """Render transparent AI reasoning and evidence."""
-    hero("AI REASONING", "Understand the challenge signals.", "Every output is derived from local data.")
+    hero(
+        "AI REASONING",
+        "Understand the challenge signals.",
+        "Every output is derived from local data.",
+    )
     report = require_report()
     if not report:
         return
@@ -169,7 +188,10 @@ def render_analysis() -> None:
     cols[0].metric("Readiness", f"{report.analysis.readiness_score}/100")
     cols[1].metric("Urgency", f"{report.analysis.urgency_score}/100")
     cols[2].metric("Evidence matched", len(report.evidence))
-    st.markdown(f'<div class="glass-card">{escape(report.summary)}</div>', unsafe_allow_html=True)
+    st.markdown(
+        f'<div class="glass-card">{escape(report.summary)}</div>',
+        unsafe_allow_html=True,
+    )
     left, right = st.columns(2)
     with left:
         st.markdown("### Core challenges")
@@ -181,7 +203,10 @@ def render_analysis() -> None:
             st.markdown(f"- {item}")
     st.markdown("### Extracted signals")
     st.markdown(
-        " ".join(f'<span class="badge">{escape(tag)}</span>' for tag in report.analysis.keywords),
+        " ".join(
+            f'<span class="badge">{escape(tag)}</span>'
+            for tag in report.analysis.keywords
+        ),
         unsafe_allow_html=True,
     )
     st.markdown("### Evidence map")
@@ -197,13 +222,20 @@ def render_analysis() -> None:
 
 def render_recommendations() -> None:
     """Render scored actions, policy recommendations, and comparisons."""
-    hero("DECISION WORKSPACE", "Compare pilot-ready interventions.", "Prioritized by local evidence match.")
+    hero(
+        "DECISION WORKSPACE",
+        "Compare pilot-ready interventions.",
+        "Prioritized by local evidence match.",
+    )
     report = require_report()
     if not report:
         return
     st.plotly_chart(score_chart(report), width="stretch")
     for index, item in enumerate(report.recommendations, 1):
-        with st.expander(f"{index}. {item.title} | Impact {item.impact_score} | Innovation {item.innovation_score}", expanded=index == 1):
+        with st.expander(
+            f"{index}. {item.title} | Impact {item.impact_score} | Innovation {item.innovation_score}",
+            expanded=index == 1,
+        ):
             a, b, c = st.columns(3)
             a.metric("Confidence", f"{item.confidence:.0%}")
             b.metric("Estimated cost", item.estimated_cost)
@@ -214,12 +246,18 @@ def render_recommendations() -> None:
                 st.markdown(f"- {step}")
     st.markdown("### Policy recommendations")
     for policy in report.policy_recommendations:
-        st.markdown(f'<div class="glass-card">{escape(policy)}</div>', unsafe_allow_html=True)
+        st.markdown(
+            f'<div class="glass-card">{escape(policy)}</div>', unsafe_allow_html=True
+        )
 
 
 def render_download() -> None:
     """Render final report preview and Markdown download."""
-    hero("REPORT CENTER", "Export the decision brief.", "A portable, auditable artifact for stakeholders.")
+    hero(
+        "REPORT CENTER",
+        "Export the decision brief.",
+        "A portable, auditable artifact for stakeholders.",
+    )
     report = require_report()
     if not report:
         return
