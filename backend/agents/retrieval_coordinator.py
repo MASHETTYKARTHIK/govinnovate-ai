@@ -16,6 +16,11 @@ class RetrievalCoordinator:
     ) -> tuple[Evidence, ...]:
         """Return evidence matching problem text and structured context."""
         query = " ".join(
-            [problem.text, problem.sector, problem.location, " ".join(analysis.keywords)]
+            [
+                problem.text,
+                problem.sector,
+                problem.location,
+                " ".join(analysis.keywords),
+            ]
         )
         return self.repository.search(query, limit=limit)

@@ -1,13 +1,71 @@
-# You can override the included template(s) by including variable overrides
-# SAST customization: https://docs.gitlab.com/ee/user/application_security/sast/#customizing-the-sast-settings
-# Secret Detection customization: https://docs.gitlab.com/ee/user/application_security/secret_detection/pipeline/#customization
-# Dependency Scanning customization: https://docs.gitlab.com/ee/user/application_security/dependency_scanning/#customizing-the-dependency-scanning-settings
-# Container Scanning customization: https://docs.gitlab.com/ee/user/application_security/container_scanning/#customizing-the-container-scanning-settings
-# Note that environment variables can be set in several places
-# See https://docs.gitlab.com/ee/ci/variables/#cicd-variable-precedence
-stages:
-- test
-sast:
+﻿stages:
+  - lint
+  - format
+  - type_check
+  - test
+  - coverage
+  - security
+
+variables:
+  PIP_DISABLE_PIP_VERSION_CHECK: "1"
+  PIP_NO_CACHE_DIR: "1"
+
+.default:
+  image: python:3.11
+  before_script:
+    - python -m pip install --upgrade pip
+    - pip install -r requirements-dev.txt
+
+format:
+  stage: format
+  script:
+    - black --check .
+
+lint:
+  stage: lint
+  script:
+    - ruff check .
+
+type_check:
+  stage: type_check
+  script:
+    - python -m mypy .
+
+test:
   stage: test
-include:
-- template: Security/SAST.gitlab-ci.yml
+  script:
+    - pytest
+
+coverage:
+  stage: coverage
+  script:
+    - pytest --cov=backend --cov=streamlit_app --cov-report=xml:coverage.xml --cov-fail-under=60
+  artifacts:
+    paths:
+      - coverage.xml
+    reports:
+      cobertura: coverage.xml
+
+dependency_audit:
+  stage: security
+  script:
+    - python -m pip_audit
+
+secret_scan:
+  stage: security
+  script:
+    - apt-get update -y && apt-get install -y curl tar
+    - curl -sSL https://github.com/zricethezav/gitleaks/releases/latest/download/gitleaks-linux-amd64.tar.gz | tar xz -C /tmp
+    - chmod +x /tmp/gitleaks
+    - /tmp/gitleaks detect --source . --report-path gitleaks-report.json
+  artifacts:
+    paths:
+      - gitleaks-report.json
+
+generate_changelog:
+  stage: security
+  script:
+    - git-cliff --config cliff.toml --output CHANGELOG.md
+  artifacts:
+    paths:
+      - CHANGELOG.md

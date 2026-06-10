@@ -20,7 +20,8 @@ class ReportGenerator:
         """Build a structured report using only local evidence."""
         candidates = evidence[:5] or self._fallback_evidence(problem)
         recommendations = tuple(
-            self._recommendation(item, index, problem) for index, item in enumerate(candidates[:4])
+            self._recommendation(item, index, problem)
+            for index, item in enumerate(candidates[:4])
         )
         policies = self._policy_recommendations(problem, evidence)
         report_hash = hashlib.sha1(
@@ -70,7 +71,9 @@ class ReportGenerator:
     def _policy_recommendations(
         problem: Problem, evidence: tuple[Evidence, ...]
     ) -> tuple[str, ...]:
-        program_titles = [item.title for item in evidence if "Program" in item.category][:2]
+        program_titles = [
+            item.title for item in evidence if "Program" in item.category
+        ][:2]
         policies = [
             f"Create a cross-department {problem.sector.lower()} innovation working group.",
             "Use outcome-based pilot procurement with transparent success metrics.",
@@ -91,6 +94,9 @@ class ReportGenerator:
                 source="GovInnovate AI fallback framework",
                 relevance=0.58,
                 tags=("pilot", "measurement"),
-                metadata={"estimated_cost": problem.budget, "timeframe": problem.timeframe},
+                metadata={
+                    "estimated_cost": problem.budget,
+                    "timeframe": problem.timeframe,
+                },
             ),
         )

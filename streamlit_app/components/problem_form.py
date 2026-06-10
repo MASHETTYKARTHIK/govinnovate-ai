@@ -22,26 +22,48 @@ def render_problem_form() -> Problem | None:
             location = st.text_input("Location", placeholder="Hyderabad, Telangana")
             sector = st.selectbox(
                 "Sector",
-                ("Transport", "Waste", "Water", "Health", "Education", "Energy", "Other"),
+                (
+                    "Transport",
+                    "Waste",
+                    "Water",
+                    "Health",
+                    "Education",
+                    "Energy",
+                    "Other",
+                ),
             )
             target_population = st.text_input(
-                "Target population", placeholder="Commuters in high-congestion corridors"
+                "Target population",
+                placeholder="Commuters in high-congestion corridors",
             )
         with right:
             budget = st.selectbox(
                 "Indicative budget",
-                ("Not specified", "Under INR 10 lakh", "INR 10-50 lakh", "INR 50 lakh-2 crore", "Above INR 2 crore"),
+                (
+                    "Not specified",
+                    "Under INR 10 lakh",
+                    "INR 10-50 lakh",
+                    "INR 50 lakh-2 crore",
+                    "Above INR 2 crore",
+                ),
             )
             timeframe = st.selectbox(
-                "Target timeframe", ("0-3 months", "3-6 months", "6-12 months", "12-24 months")
+                "Target timeframe",
+                ("0-3 months", "3-6 months", "6-12 months", "12-24 months"),
             )
-            st.info("GovInnovate AI uses only local sample datasets and transparent mock reasoning.")
-        submitted = st.form_submit_button("Run innovation analysis", type="primary", width="stretch")
+            st.info(
+                "GovInnovate AI uses only local sample datasets and transparent mock reasoning."
+            )
+        submitted = st.form_submit_button(
+            "Run innovation analysis", type="primary", width="stretch"
+        )
 
     if not submitted:
         return None
     if len(problem_text.strip()) < 30:
-        st.error("Please provide at least 30 characters so the analysis has enough context.")
+        st.error(
+            "Please provide at least 30 characters so the analysis has enough context."
+        )
         return None
     return Problem(
         text=problem_text.strip(),

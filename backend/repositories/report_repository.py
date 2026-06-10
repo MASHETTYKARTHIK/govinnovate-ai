@@ -24,8 +24,7 @@ class ReportRepository:
 
     def _initialize(self) -> None:
         with self._connect() as connection:
-            connection.execute(
-                """
+            connection.execute("""
                 CREATE TABLE IF NOT EXISTS reports (
                     report_id TEXT PRIMARY KEY,
                     created_at TEXT NOT NULL,
@@ -35,8 +34,7 @@ class ReportRepository:
                     impact_score INTEGER NOT NULL,
                     payload TEXT NOT NULL
                 )
-                """
-            )
+                """)
 
     def save(self, report: InnovationReport) -> None:
         """Insert or replace a report."""
