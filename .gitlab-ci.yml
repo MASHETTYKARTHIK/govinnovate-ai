@@ -9,8 +9,9 @@ lint:
   stage: lint
   image: python:3.11
   script:
-    - pip install black
+    - pip install -r requirements-dev.txt
     - black --check .
+    - ruff check .
 
 test:
   stage: test
