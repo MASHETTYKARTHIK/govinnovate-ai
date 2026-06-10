@@ -54,10 +54,10 @@ def generate_markdown(report: InnovationReport) -> str:
     lines.extend(["## Policy Recommendations", ""])
     lines.extend(f"- {policy}" for policy in report.policy_recommendations)
     lines.extend(["", "## Evidence Register", ""])
-    for item in report.evidence:
+    for evidence_item in report.evidence:
         lines.append(
-            f"- **{item.title}** ({item.category}, {item.relevance:.0%} match): "
-            f"{item.summary} Source: {item.source}"
+            f"- **{evidence_item.title}** ({evidence_item.category}, {evidence_item.relevance:.0%} match): "
+            f"{evidence_item.summary} Source: {evidence_item.source}"
         )
     lines.extend(
         [

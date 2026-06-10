@@ -195,12 +195,12 @@ def render_analysis() -> None:
     left, right = st.columns(2)
     with left:
         st.markdown("### Core challenges")
-        for item in report.analysis.challenges:
-            st.markdown(f"- {item}")
+        for challenge in report.analysis.challenges:
+            st.markdown(f"- {challenge}")
     with right:
         st.markdown("### Strategic objectives")
-        for item in report.analysis.objectives:
-            st.markdown(f"- {item}")
+        for objective in report.analysis.objectives:
+            st.markdown(f"- {objective}")
     st.markdown("### Extracted signals")
     st.markdown(
         " ".join(
@@ -210,14 +210,18 @@ def render_analysis() -> None:
         unsafe_allow_html=True,
     )
     st.markdown("### Evidence map")
-    categories = sorted({item.category for item in report.evidence})
+    categories = sorted({evidence.category for evidence in report.evidence})
     tabs = st.tabs(categories) if categories else []
     for tab, category in zip(tabs, categories):
         with tab:
-            rows = [item for item in report.evidence if item.category == category]
-            for item in rows:
-                st.markdown(f"**{item.title}** - {item.relevance:.0%} match")
-                st.caption(f"{item.summary} | {item.source}")
+            rows = [
+                evidence
+                for evidence in report.evidence
+                if evidence.category == category
+            ]
+            for evidence in rows:
+                st.markdown(f"**{evidence.title}** - {evidence.relevance:.0%} match")
+                st.caption(f"{evidence.summary} | {evidence.source}")
 
 
 def render_recommendations() -> None:
