@@ -25,7 +25,7 @@ class ReportGenerator:
         )
         policies = self._policy_recommendations(problem, evidence)
         report_hash = hashlib.sha1(
-            f"{problem.text}{InnovationReport.timestamp()}".encode("utf-8")
+            f"{problem.text}{InnovationReport.timestamp()}".encode()
         ).hexdigest()[:8]
         return InnovationReport(
             report_id=f"GIA-{report_hash.upper()}",
