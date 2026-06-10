@@ -1,9 +1,11 @@
 # Datasets
 
-Local, versioned POC datasets used by the retrieval coordinator.
+Local sample data powering the hackathon MVP:
 
-- `raw/`: source documents before processing.
-- `curated/`: normalized JSON evidence records ready for retrieval.
-- `indexes/`: generated vector or keyword indexes.
+- `research_papers.json`
+- `startups.json`
+- `case_studies.json`
+- `government_programs.json`
 
-Do not place sensitive or personally identifiable information in the POC dataset.
+The backend builds an in-memory FAISS-style mock vector index from these records.
+All entries are demonstration content and should be independently validated.

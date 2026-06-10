@@ -1,6 +1,7 @@
 # Reports
 
-Generated innovation briefs and export artifacts live here.
+Runtime report artifacts live here.
 
-- `generated/`: runtime report outputs; keep only `.gitkeep` in source control.
-- `templates/`: future Markdown, HTML, or PDF report templates.
+- `generated/govinnovate.db`: SQLite report history created by the application.
+- `generated/`: generated runtime artifacts.
+- `templates/`: presentation-ready report templates.

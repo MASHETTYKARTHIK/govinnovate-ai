@@ -1,0 +1,50 @@
+[
+  {
+    "id": "program-smart-cities",
+    "category": "Government Programs",
+    "title": "Smart Cities Mission Alignment",
+    "summary": "Urban innovation pilots can align with integrated command centers, data platforms, and citizen services.",
+    "source": "GovInnovate local government program summary",
+    "location": "India",
+    "sector": "Transport",
+    "tags": ["smart city", "traffic", "urban", "data", "mobility"],
+    "estimated_cost": "Program dependent",
+    "timeframe": "6-12 months"
+  },
+  {
+    "id": "program-swachh",
+    "category": "Government Programs",
+    "title": "Swachh Bharat Mission Urban Alignment",
+    "summary": "Municipal waste innovation can align with sanitation outcomes, citizen participation, and service monitoring.",
+    "source": "GovInnovate local government program summary",
+    "location": "India",
+    "sector": "Waste",
+    "tags": ["waste", "sanitation", "citizens", "urban"],
+    "estimated_cost": "Program dependent",
+    "timeframe": "6-12 months"
+  },
+  {
+    "id": "program-jal-jeevan",
+    "category": "Government Programs",
+    "title": "Jal Jeevan Mission Alignment",
+    "summary": "Water service pilots can support reliable supply, monitoring, quality, and community participation.",
+    "source": "GovInnovate local government program summary",
+    "location": "India",
+    "sector": "Water",
+    "tags": ["water", "quality", "monitoring", "community"],
+    "estimated_cost": "Program dependent",
+    "timeframe": "12-24 months"
+  },
+  {
+    "id": "program-digital-health",
+    "category": "Government Programs",
+    "title": "Ayushman Bharat Digital Mission Alignment",
+    "summary": "Digital health pilots should align with interoperability, consent, and continuity of care.",
+    "source": "GovInnovate local government program summary",
+    "location": "India",
+    "sector": "Health",
+    "tags": ["health", "digital", "consent", "care"],
+    "estimated_cost": "Program dependent",
+    "timeframe": "6-12 months"
+  }
+]

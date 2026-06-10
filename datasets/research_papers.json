@@ -1,0 +1,62 @@
+[
+  {
+    "id": "research-traffic-01",
+    "category": "Research Papers",
+    "title": "Adaptive Signal Control for Congested Urban Corridors",
+    "summary": "Adaptive traffic signals can reduce intersection delay when paired with reliable sensing and corridor-level optimization.",
+    "source": "Local research digest: Urban Mobility Lab",
+    "location": "Global",
+    "sector": "Transport",
+    "tags": ["traffic", "congestion", "adaptive signals", "mobility"],
+    "estimated_cost": "INR 50 lakh-2 crore",
+    "timeframe": "6-12 months"
+  },
+  {
+    "id": "research-waste-01",
+    "category": "Research Papers",
+    "title": "Data-Driven Municipal Waste Collection",
+    "summary": "Route optimization and fill-level monitoring improve collection reliability and reduce fuel use in dense cities.",
+    "source": "Local research digest: Circular Cities Review",
+    "location": "Global",
+    "sector": "Waste",
+    "tags": ["waste", "collection", "routing", "sensors"],
+    "estimated_cost": "INR 10-50 lakh",
+    "timeframe": "3-6 months"
+  },
+  {
+    "id": "research-water-01",
+    "category": "Research Papers",
+    "title": "District Metering for Urban Water Loss Reduction",
+    "summary": "District metered areas and pressure monitoring help utilities identify leakage and prioritize maintenance.",
+    "source": "Local research digest: Water Systems Journal",
+    "location": "South Asia",
+    "sector": "Water",
+    "tags": ["water", "leakage", "metering", "maintenance"],
+    "estimated_cost": "INR 50 lakh-2 crore",
+    "timeframe": "6-12 months"
+  },
+  {
+    "id": "research-health-01",
+    "category": "Research Papers",
+    "title": "Telehealth Triage for Underserved Communities",
+    "summary": "Hybrid telehealth and community health worker models can expand primary care access while preserving local trust.",
+    "source": "Local research digest: Digital Health Evidence",
+    "location": "India",
+    "sector": "Health",
+    "tags": ["health", "telehealth", "rural", "access"],
+    "estimated_cost": "INR 10-50 lakh",
+    "timeframe": "3-6 months"
+  },
+  {
+    "id": "research-education-01",
+    "category": "Research Papers",
+    "title": "Targeted Learning Support Using Formative Assessment",
+    "summary": "Frequent low-stakes assessment and targeted instruction can improve foundational learning outcomes.",
+    "source": "Local research digest: Education Outcomes Review",
+    "location": "India",
+    "sector": "Education",
+    "tags": ["education", "learning", "assessment", "students"],
+    "estimated_cost": "Under INR 10 lakh",
+    "timeframe": "3-6 months"
+  }
+]

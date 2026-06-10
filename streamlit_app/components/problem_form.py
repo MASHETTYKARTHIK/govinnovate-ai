@@ -1,28 +1,53 @@
-"""Problem input form component."""
+"""Guided problem intake form."""
 
 from backend.models.problem import Problem
 
 
 def render_problem_form() -> Problem | None:
-    """Render the problem form and return submitted input."""
+    """Render a complete government challenge intake form."""
     import streamlit as st
 
     with st.form("problem-form"):
+        st.markdown("### Define the challenge")
         problem_text = st.text_area(
-            "Describe the public-sector challenge",
-            placeholder="Example: Reduce peak-hour traffic congestion in Hyderabad...",
-            height=180,
+            "Problem statement",
+            placeholder=(
+                "Describe the challenge, affected communities, current constraints, "
+                "and the outcome the government wants to achieve."
+            ),
+            height=200,
         )
-        location = st.text_input("Location", placeholder="Hyderabad, India")
-        sector = st.selectbox(
-            "Sector",
-            ("Transport", "Waste", "Water", "Health", "Education", "Other"),
-        )
-        submitted = st.form_submit_button("Generate innovation brief", type="primary")
+        left, right = st.columns(2)
+        with left:
+            location = st.text_input("Location", placeholder="Hyderabad, Telangana")
+            sector = st.selectbox(
+                "Sector",
+                ("Transport", "Waste", "Water", "Health", "Education", "Energy", "Other"),
+            )
+            target_population = st.text_input(
+                "Target population", placeholder="Commuters in high-congestion corridors"
+            )
+        with right:
+            budget = st.selectbox(
+                "Indicative budget",
+                ("Not specified", "Under INR 10 lakh", "INR 10-50 lakh", "INR 50 lakh-2 crore", "Above INR 2 crore"),
+            )
+            timeframe = st.selectbox(
+                "Target timeframe", ("0-3 months", "3-6 months", "6-12 months", "12-24 months")
+            )
+            st.info("GovInnovate AI uses only local sample datasets and transparent mock reasoning.")
+        submitted = st.form_submit_button("Run innovation analysis", type="primary", width="stretch")
 
     if not submitted:
         return None
-    if not problem_text.strip():
-        st.error("Please describe the challenge before continuing.")
+    if len(problem_text.strip()) < 30:
+        st.error("Please provide at least 30 characters so the analysis has enough context.")
         return None
-    return Problem(text=problem_text.strip(), location=location.strip(), sector=sector)
+    return Problem(
+        text=problem_text.strip(),
+        location=location.strip(),
+        sector=sector,
+        budget=budget,
+        timeframe=timeframe,
+        target_population=target_population.strip(),
+    )

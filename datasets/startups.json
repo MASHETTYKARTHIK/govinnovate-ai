@@ -1,0 +1,54 @@
+[
+  {
+    "id": "startup-mobility-01",
+    "category": "Startups",
+    "title": "FlowGrid Mobility Analytics",
+    "summary": "A mock startup platform combining traffic feeds, signal analytics, and corridor performance dashboards.",
+    "source": "GovInnovate local startup directory",
+    "location": "India",
+    "sector": "Transport",
+    "tags": ["traffic", "analytics", "signals", "dashboard"],
+    "maturity": "Pilot ready",
+    "estimated_cost": "INR 10-50 lakh",
+    "timeframe": "3-6 months"
+  },
+  {
+    "id": "startup-waste-01",
+    "category": "Startups",
+    "title": "CleanRoute Systems",
+    "summary": "A mock fleet-routing solution for municipal waste vehicles with service-level monitoring.",
+    "source": "GovInnovate local startup directory",
+    "location": "India",
+    "sector": "Waste",
+    "tags": ["waste", "fleet", "routing", "collection"],
+    "maturity": "Deployment ready",
+    "estimated_cost": "INR 10-50 lakh",
+    "timeframe": "3-6 months"
+  },
+  {
+    "id": "startup-water-01",
+    "category": "Startups",
+    "title": "JalWatch Network",
+    "summary": "A mock low-cost sensor network for water pressure, quality, and leakage alerts.",
+    "source": "GovInnovate local startup directory",
+    "location": "India",
+    "sector": "Water",
+    "tags": ["water", "sensors", "leakage", "quality"],
+    "maturity": "Pilot ready",
+    "estimated_cost": "INR 10-50 lakh",
+    "timeframe": "3-6 months"
+  },
+  {
+    "id": "startup-health-01",
+    "category": "Startups",
+    "title": "SehatLink Community Care",
+    "summary": "A mock assisted telehealth platform for community clinics and health workers.",
+    "source": "GovInnovate local startup directory",
+    "location": "India",
+    "sector": "Health",
+    "tags": ["health", "telehealth", "clinics", "community"],
+    "maturity": "Pilot ready",
+    "estimated_cost": "INR 10-50 lakh",
+    "timeframe": "3-6 months"
+  }
+]

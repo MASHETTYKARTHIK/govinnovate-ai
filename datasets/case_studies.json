@@ -1,0 +1,54 @@
+[
+  {
+    "id": "case-traffic-01",
+    "category": "Case Studies",
+    "title": "Bus Priority Corridor Demonstration",
+    "summary": "A city corridor pilot used bus-priority measures and signal timing to improve public transport reliability.",
+    "source": "GovInnovate local case library",
+    "location": "South Asia",
+    "sector": "Transport",
+    "tags": ["traffic", "bus", "priority", "congestion", "pilot"],
+    "outcome": "Improved bus journey reliability",
+    "estimated_cost": "INR 50 lakh-2 crore",
+    "timeframe": "6-12 months"
+  },
+  {
+    "id": "case-waste-01",
+    "category": "Case Studies",
+    "title": "Ward-Level Waste Segregation Challenge",
+    "summary": "A ward combined citizen incentives, collection monitoring, and public dashboards to improve segregation.",
+    "source": "GovInnovate local case library",
+    "location": "India",
+    "sector": "Waste",
+    "tags": ["waste", "segregation", "citizens", "dashboard"],
+    "outcome": "Higher source segregation",
+    "estimated_cost": "Under INR 10 lakh",
+    "timeframe": "3-6 months"
+  },
+  {
+    "id": "case-water-01",
+    "category": "Case Studies",
+    "title": "Non-Revenue Water Rapid Response Pilot",
+    "summary": "A utility mapped leakage hotspots and formed a rapid repair team around district metering data.",
+    "source": "GovInnovate local case library",
+    "location": "South Asia",
+    "sector": "Water",
+    "tags": ["water", "leakage", "metering", "repair"],
+    "outcome": "Reduced water loss in pilot zones",
+    "estimated_cost": "INR 10-50 lakh",
+    "timeframe": "6-12 months"
+  },
+  {
+    "id": "case-education-01",
+    "category": "Case Studies",
+    "title": "Foundational Learning Mission Dashboard",
+    "summary": "A district used simple classroom assessments and a management dashboard to target learning support.",
+    "source": "GovInnovate local case library",
+    "location": "India",
+    "sector": "Education",
+    "tags": ["education", "learning", "assessment", "dashboard"],
+    "outcome": "Improved targeted instruction",
+    "estimated_cost": "Under INR 10 lakh",
+    "timeframe": "6-12 months"
+  }
+]
