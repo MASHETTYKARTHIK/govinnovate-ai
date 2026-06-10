@@ -13,8 +13,8 @@ class AnalysisOrchestrator:
 
     def __init__(
         self,
-        retrieval_coordinator=None,
-        report_repository=None,
+        retrieval_coordinator: RetrievalCoordinator | None = None,
+        report_repository: ReportRepository | None = None,
     ) -> None:
         self.problem_analyzer = ProblemAnalyzer()
         self.retrieval_coordinator = retrieval_coordinator or RetrievalCoordinator()

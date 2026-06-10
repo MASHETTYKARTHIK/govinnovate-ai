@@ -3,6 +3,7 @@
 import json
 import sqlite3
 from dataclasses import asdict
+from pathlib import Path
 
 from backend.config import settings
 from backend.models.report import InnovationReport
@@ -11,8 +12,7 @@ from backend.models.report import InnovationReport
 class ReportRepository:
     """Persist lightweight report metadata and serialized report payloads."""
 
-    def __init__(self, database_path=None) -> None:
-
+    def __init__(self, database_path: Path | None = None) -> None:
         self.database_path = database_path or settings.database_path
         self.database_path.parent.mkdir(parents=True, exist_ok=True)
         self._initialize()
