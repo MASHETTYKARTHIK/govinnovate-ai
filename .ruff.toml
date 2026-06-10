@@ -2,4 +2,17 @@ line-length = 88
 target-version = "py311"
 
 [lint]
-extend-ignore = ["E402"]
+select = [
+    "E", "W",      # pycodestyle errors and warnings
+    "F",           # Pyflakes
+    "I",           # isort
+    "C90",         # McCabe complexity
+    "N",           # pep8-naming
+    "UP",          # pyupgrade
+    "B",           # flake8-bugbear
+]
+extend-ignore = ["E402", "E501"]  # E402: module-level import not at top, E501: line too long
+
+[lint.isort]
+force-single-line = false
+
