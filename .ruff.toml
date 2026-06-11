@@ -15,4 +15,3 @@ extend-ignore = ["E402", "E501"]  # E402: module-level import not at top, E501: 
 
 [lint.isort]
 force-single-line = false
-
