@@ -6,6 +6,7 @@ stages:
 - test
 - coverage
 - security
+- dependency_audit
 
 default:
   image: python:3.11
@@ -22,6 +23,7 @@ before_script:
 - pip install pytest pytest-cov
 - pip install pylint flake8 ruff mypy bandit semgrep vulture pyupgrade
 - pip install types-requests
+- pip install pip-audit
 
 format:
   stage: format
@@ -57,3 +59,8 @@ security:
   - bandit -r backend
   - semgrep --config=auto
   - vulture backend streamlit_app
+
+dependency_audit:
+  stage: dependency_audit
+  script:
+  - pip-audit
