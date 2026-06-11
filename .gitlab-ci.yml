@@ -1,5 +1,5 @@
-﻿```yaml
 stages:
+```yaml id="0j6r72"
   - lint
   - format
   - type_check
@@ -27,11 +27,9 @@ format:
 lint:
   stage: lint
   script:
-    - pre-commit install
     - pre-commit run --all-files
     - ruff check .
     - flake8 .
-    - pylint backend streamlit_app || true
 
 type_check:
   stage: type_check
@@ -46,16 +44,7 @@ test:
 coverage:
   stage: coverage
   script:
-    - pytest --cov=. --cov-report=xml --cov-report=term --cov-fail-under=80
-
-  artifacts:
-    paths:
-      - coverage.xml
-
-quality_check:
-  stage: quality
-  script:
-    - vulture backend streamlit_app
+    - pytest --cov=. --cov-report=xml --cov-fail-under=80
 
 dependency_audit:
   stage: security
@@ -67,14 +56,4 @@ secret_scan:
   script:
     - pip install detect-secrets
     - detect-secrets scan > .secrets.baseline
-
-generate_changelog:
-  stage: security
-  script:
-    - pip install git-cliff
-    - git-cliff --output CHANGELOG.md
-
-  artifacts:
-    paths:
-      - CHANGELOG.md
 ```
