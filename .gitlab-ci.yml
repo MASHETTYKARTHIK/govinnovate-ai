@@ -1,16 +1,59 @@
 stages:
-  - lint
-  - test
+
+- format
+- lint
+- type_check
+- test
+- coverage
+- security
 
 default:
   image: python:3.11
 
+cache:
+  paths:
+  - .cache/pip
+
+before_script:
+
+- python --version
+- pip install --upgrade pip
+- pip install -r requirements.txt
+- pip install pytest pytest-cov
+- pip install pylint flake8 ruff mypy bandit semgrep vulture pyupgrade
+- pip install types-requests
+
+format:
+  stage: format
+  script:
+  - pyupgrade $(find . -name "*.py")
+  - python -m compileall backend streamlit_app
+
 lint:
   stage: lint
   script:
-    - echo "Lint stage running"
+  - ruff check .
+  - flake8 backend streamlit_app
+  - pylint backend streamlit_app
+
+type_check:
+  stage: type_check
+  script:
+  - mypy backend streamlit_app
 
 test:
   stage: test
   script:
-    - echo "Test stage running"
+  - pytest
+
+coverage:
+  stage: coverage
+  script:
+  - pytest --cov=backend --cov-report=term
+
+security:
+  stage: security
+  script:
+  - bandit -r backend
+  - semgrep --config=auto
+  - vulture backend streamlit_app
