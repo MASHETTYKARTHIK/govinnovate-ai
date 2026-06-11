@@ -10,7 +10,7 @@ bandit==1.7.5
 flake8==7.1.0
 pylint==3.0.0
 vulture==2.16
-semgrep==1.165.0
+semgrep==1.120.0
 pyupgrade==3.21.2
 detect-secrets==1.4.0
 pbr==5.11.1
