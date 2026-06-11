@@ -295,4 +295,3 @@ the evidence register.
   verified independently.
 - **Extensible:** Mock reasoning and vector search can be replaced without
   changing the overall data flow.
-

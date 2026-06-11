@@ -24,7 +24,7 @@ class ReportGenerator:
             for index, item in enumerate(candidates[:4])
         )
         policies = self._policy_recommendations(problem, evidence)
-        report_hash = hashlib.sha1(
+        report_hash = hashlib.sha256(
             f"{problem.text}{InnovationReport.timestamp()}".encode("utf-8")
         ).hexdigest()[:8]
         return InnovationReport(

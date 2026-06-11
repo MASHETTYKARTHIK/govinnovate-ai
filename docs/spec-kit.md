@@ -95,19 +95,19 @@ GovInnovate AI: an AI-powered platform that:
 
 ### User Stories (Sample)
 
-**US1:** As a city official, I want to enter a problem statement in plain language so I don't need technical expertise.  
+**US1:** As a city official, I want to enter a problem statement in plain language so I don't need technical expertise.
 - Acceptance: Text input ≥500 chars; optional metadata (geo, budget); submit triggers analysis.
 
-**US2:** As a researcher, I want to see top research papers with abstracts and DOI links so I can validate the evidence base.  
+**US2:** As a researcher, I want to see top research papers with abstracts and DOI links so I can validate the evidence base.
 - Acceptance: Top 5 papers with title, authors, year, abstract, relevance score, DOI link, evidence strength indicator.
 
-**US3:** As a procurement lead, I want matched startups with contact info so I can prepare RFQ.  
+**US3:** As a procurement lead, I want matched startups with contact info so I can prepare RFQ.
 - Acceptance: Top 5 vendors with name, description, maturity, country, contact, case references; exportable as CSV.
 
-**US4:** As a decision-maker, I want AI-synthesized recommendations scored by feasibility, cost, and impact so I can prioritize.  
+**US4:** As a decision-maker, I want AI-synthesized recommendations scored by feasibility, cost, and impact so I can prioritize.
 - Acceptance: Top 3 with 5 scores (0–100), color-coded, linked to sources.
 
-**US5:** As an executive, I want a polished, one-page summary so I can present to council without deep analysis.  
+**US5:** As an executive, I want a polished, one-page summary so I can present to council without deep analysis.
 - Acceptance: 1-page PDF with problem, top 3 recommendations, key metrics, cost, next steps.
 
 ### Functional Requirements
@@ -347,7 +347,7 @@ Return as JSON.
 
 **LLM Prompt (Simplified):**
 ```
-You are an expert government innovation consultant. 
+You are an expert government innovation consultant.
 Given the problem analysis and retrieved evidence, generate a comprehensive report with sections:
 1. Problem Analysis (root causes, current interventions, gaps)
 2. Case Studies (3 relevant examples with outcomes)
@@ -875,40 +875,40 @@ This SpecKit **does not include** full implementation code or runnable systems.
 ## Summary
 
 ### What This SpecKit Covers
-✅ Complete product vision + strategy  
-✅ User personas + user stories + requirements  
-✅ System architecture (components, data flow)  
-✅ Agent specifications (problem analyzer, retrieval, synthesis)  
-✅ Data models + schemas  
-✅ API specifications (endpoints, request/response)  
-✅ Dashboard design (wireframes, components)  
-✅ Security + privacy considerations  
-✅ Scalability plan (POC → Phase 2 → Phase 3)  
-✅ Roadmap + timeline  
+✅ Complete product vision + strategy
+✅ User personas + user stories + requirements
+✅ System architecture (components, data flow)
+✅ Agent specifications (problem analyzer, retrieval, synthesis)
+✅ Data models + schemas
+✅ API specifications (endpoints, request/response)
+✅ Dashboard design (wireframes, components)
+✅ Security + privacy considerations
+✅ Scalability plan (POC → Phase 2 → Phase 3)
+✅ Roadmap + timeline
 
 ### What's Ready
-✅ POC scope clearly defined  
-✅ Technology stack chosen  
-✅ Tasks organized + estimated (175 SP, 4 weeks)  
-✅ Success metrics identified  
-✅ Government partnership strategy drafted  
-✅ Security + compliance roadmap outlined  
+✅ POC scope clearly defined
+✅ Technology stack chosen
+✅ Tasks organized + estimated (175 SP, 4 weeks)
+✅ Success metrics identified
+✅ Government partnership strategy drafted
+✅ Security + compliance roadmap outlined
 
 ### What Comes Next (Phase 2)
-🔲 Full implementation (code, infra, deployment)  
-🔲 Pilot with real government users  
-🔲 Iterative refinement based on feedback  
-🔲 Hardening, optimization, scale  
-🔲 Production launch  
+🔲 Full implementation (code, infra, deployment)
+🔲 Pilot with real government users
+🔲 Iterative refinement based on feedback
+🔲 Hardening, optimization, scale
+🔲 Production launch
 
 ---
 
 ## Contact & Support
 
-**Technical:** Architecture questions → Tech Lead  
-**Product:** Requirements clarification → Product Manager  
-**Policy:** Government partnerships → Domain Expert  
-**Execution:** Implementation tasks → Engineering Team  
+**Technical:** Architecture questions → Tech Lead
+**Product:** Requirements clarification → Product Manager
+**Policy:** Government partnerships → Domain Expert
+**Execution:** Implementation tasks → Engineering Team
 
 ---
 
@@ -923,10 +923,10 @@ This SpecKit **does not include** full implementation code or runnable systems.
 
 ---
 
-**Version:** 1.0  
-**Status:** Complete (POC & SpecKit)  
-**Date:** 2026-06-09  
-**Next Review:** 2026-06-23 (post-initial pilot discussions)  
+**Version:** 1.0
+**Status:** Complete (POC & SpecKit)
+**Date:** 2026-06-09
+**Next Review:** 2026-06-23 (post-initial pilot discussions)
 
 ---
 

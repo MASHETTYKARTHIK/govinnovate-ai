@@ -109,4 +109,3 @@ workflow manually.
 - Streamlit launches without errors.
 - No `__pycache__`, `.pyc`, `.env`, virtual environment, or SQLite artifacts are included.
 - The merge request explains what changed and why.
-

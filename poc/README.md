@@ -39,22 +39,22 @@ Plain-text problem statement (e.g., "Traffic congestion in Hyderabad").
 
 ## Demo Flow (Step-by-Step)
 
-1. **Problem Input**  
+1. **Problem Input**
    User enters a problem statement (e.g., "Traffic congestion in Hyderabad — peak-hour gridlock on arterial roads; high transit times for buses; demand-supply mismatch; limited last-mile connectivity").
 
-2. **Problem Analyzer (LLM)**  
+2. **Problem Analyzer (LLM)**
    System normalizes and expands the problem statement:
    - Extracts taxonomy tags (transport, urban planning)
    - Identifies key metrics (travel time, emissions, affordability)
    - Maps constraints (budget, geography, timeline)
 
-3. **RAG Retrieval**  
+3. **RAG Retrieval**
    Vector search across ingested documents:
    - Top 5 research papers on urban congestion
    - Top 5 case studies (Curitiba BRT, Singapore TaaS, Copenhagen cycling networks)
    - Top 5 startup/solution matches (traffic signal optimization, micro-mobility, parking management)
 
-4. **Agent Synthesis**  
+4. **Agent Synthesis**
    LLM processes retrieved context and generates sections:
    - Analysis: Root causes, current interventions, gaps
    - Cases: Global examples with measured outcomes
@@ -65,13 +65,13 @@ Plain-text problem statement (e.g., "Traffic congestion in Hyderabad").
    - Costs: Estimate range (USD 1.2M–2.5M pilot + scale costs)
    - Impact: Projected KPI deltas (15–28% travel time reduction, 6–12% emissions drop)
 
-5. **Report Generation**  
+5. **Report Generation**
    Structured report with:
    - Sections as above, each with source citations
    - Provenance links (paper DOI, case study URL, vendor contact)
    - Scoring dashboard (feasibility, cost, impact, risk, sustainability)
 
-6. **Dashboard Display**  
+6. **Dashboard Display**
    - Summary cards for top 3 recommendations
    - Scoring breakdown with color codes
    - Download button (PDF or Markdown)
@@ -81,8 +81,8 @@ Plain-text problem statement (e.g., "Traffic congestion in Hyderabad").
 
 ```
 Problem Statement:
-"Traffic congestion in Hyderabad. Peak-hour gridlock on arterial roads; high transit times for buses; 
-demand-supply mismatch; limited last-mile connectivity to transit hubs; major festival days spike traffic 
+"Traffic congestion in Hyderabad. Peak-hour gridlock on arterial roads; high transit times for buses;
+demand-supply mismatch; limited last-mile connectivity to transit hubs; major festival days spike traffic
 to critical levels."
 
 Location: Hyderabad, India
@@ -100,81 +100,81 @@ Stakeholders: HMRL (metro), GHMC (municipal corp), RTC (buses)
 - **Key Gaps:** Last-mile connectivity (0–2 km to transit), real-time traveler information, demand management (pricing/congestion charge).
 
 ### Case Studies Retrieved
-1. **Curitiba, Brazil — Bus Rapid Transit (1974)**  
-   - Intervention: Dedicated BRT lanes, level boarding, pre-boarding payment.  
-   - Outcome: 15% system-wide travel time reduction; 98% cost recovery without subsidy.  
-   - Lessons: Political commitment essential; land acquisition upfront; community buy-in critical.  
+1. **Curitiba, Brazil — Bus Rapid Transit (1974)**
+   - Intervention: Dedicated BRT lanes, level boarding, pre-boarding payment.
+   - Outcome: 15% system-wide travel time reduction; 98% cost recovery without subsidy.
+   - Lessons: Political commitment essential; land acquisition upfront; community buy-in critical.
    - Source: https://doi.org/10.1016/j.trd.2015.04.003
 
-2. **Singapore — Integrated Land-Use + Transit (1990–present)**  
-   - Intervention: Transit-oriented development + congestion pricing.  
-   - Outcome: 25% reduction in car-mode share; 60% of trips via transit; 10% VKT drop.  
-   - Lessons: Long-term consistent policy; mixed funding (public + private); tech integration critical.  
+2. **Singapore — Integrated Land-Use + Transit (1990–present)**
+   - Intervention: Transit-oriented development + congestion pricing.
+   - Outcome: 25% reduction in car-mode share; 60% of trips via transit; 10% VKT drop.
+   - Lessons: Long-term consistent policy; mixed funding (public + private); tech integration critical.
    - Source: Singapore Land Transport Master Plan 2040
 
-3. **Copenhagen — Active Mobility Networks (2000–present)**  
-   - Intervention: Protected cycleways + pedestrian zones + micro-mobility hubs.  
-   - Outcome: 45% of trips by bike; 28% lower congestion on parallel roads; improved air quality.  
-   - Lessons: Infrastructure + behavior change campaigns; employer incentives; car parking restrictions.  
+3. **Copenhagen — Active Mobility Networks (2000–present)**
+   - Intervention: Protected cycleways + pedestrian zones + micro-mobility hubs.
+   - Outcome: 45% of trips by bike; 28% lower congestion on parallel roads; improved air quality.
+   - Lessons: Infrastructure + behavior change campaigns; employer incentives; car parking restrictions.
    - Source: City of Copenhagen Mobility Plan 2025
 
 ### Research Papers
-1. **"Adaptive Traffic Signal Control: Review and Opportunities" (2021)**  
-   - Abstract: Meta-analysis of signal optimization algorithms; AI/ML approaches show 10–18% throughput gains.  
-   - Evidence: 25 field studies; median effect size 12%.  
-   - Key Findings: Requires high-quality real-time data; sensor maintenance critical; benefits degrade without continuous tuning.  
+1. **"Adaptive Traffic Signal Control: Review and Opportunities" (2021)**
+   - Abstract: Meta-analysis of signal optimization algorithms; AI/ML approaches show 10–18% throughput gains.
+   - Evidence: 25 field studies; median effect size 12%.
+   - Key Findings: Requires high-quality real-time data; sensor maintenance critical; benefits degrade without continuous tuning.
    - Source: https://doi.org/10.1016/j.trc.2021.103210
 
-2. **"Last-Mile Connectivity in Megacities" (2020)**  
-   - Abstract: Micro-mobility (e-bikes, scooters, auto-rickshaws) can serve 75–90% of last-mile trips if subsidized/regulated.  
-   - Evidence: 12-city study in South Asia; modal shift 8–15% with integrated ticketing.  
+2. **"Last-Mile Connectivity in Megacities" (2020)**
+   - Abstract: Micro-mobility (e-bikes, scooters, auto-rickshaws) can serve 75–90% of last-mile trips if subsidized/regulated.
+   - Evidence: 12-city study in South Asia; modal shift 8–15% with integrated ticketing.
    - Key Findings: Regulation and data sharing between operators critical; safety infrastructure (lanes) essential.
 
-3. **"Economic Impact of Congestion: India Context" (2019)**  
-   - Abstract: Congestion costs India ₹2.3T annually (2.2% GDP). Mumbai, Bangalore, Hyderabad top 5.  
-   - Evidence: Travel time loss, fuel waste, emissions externalities.  
+3. **"Economic Impact of Congestion: India Context" (2019)**
+   - Abstract: Congestion costs India ₹2.3T annually (2.2% GDP). Mumbai, Bangalore, Hyderabad top 5.
+   - Evidence: Travel time loss, fuel waste, emissions externalities.
    - Key Findings: Interventions with 15% TT reduction yield 1.5–2x ROI in first 5 years; health + productivity co-benefits not priced in baseline.
 
 ### Startup Matches
-1. **TrafficDot AI (India) — Intelligent Traffic Signal Optimization**  
-   - Product: SaaS platform; real-time signal retiming using CV + queue prediction.  
-   - Deployment: 8 Indian cities; typical 12–15% throughput improvement.  
-   - Cost: ₹30L setup + ₹10L/mo SaaS; ROI ~18 months.  
-   - Readiness: Scale-phase; government procurement experience; local team.  
+1. **TrafficDot AI (India) — Intelligent Traffic Signal Optimization**
+   - Product: SaaS platform; real-time signal retiming using CV + queue prediction.
+   - Deployment: 8 Indian cities; typical 12–15% throughput improvement.
+   - Cost: ₹30L setup + ₹10L/mo SaaS; ROI ~18 months.
+   - Readiness: Scale-phase; government procurement experience; local team.
    - Contact: partnerships@trafficdot.io
 
-2. **Bounce (India) — Micro-Mobility Operator**  
-   - Product: App-based bike-sharing + scooters; integration with metro apps.  
-   - Deployment: Hyderabad, Bangalore, Chennai (5000+ vehicles).  
-   - Cost: Revenue-share or subsidy models (₹5–10 per ride for first 30k rides).  
-   - Readiness: Operating; willing to integrate; pilot cities available.  
+2. **Bounce (India) — Micro-Mobility Operator**
+   - Product: App-based bike-sharing + scooters; integration with metro apps.
+   - Deployment: Hyderabad, Bangalore, Chennai (5000+ vehicles).
+   - Cost: Revenue-share or subsidy models (₹5–10 per ride for first 30k rides).
+   - Readiness: Operating; willing to integrate; pilot cities available.
    - Contact: corporate@bounce.in
 
-3. **Vahan (Airtel) — Vehicle-to-Grid + Parking Intelligence**  
-   - Product: IoT parking sensors + EV charging network; aggregated mobility signals.  
-   - Deployment: Emerging; pilot in Bangalore.  
-   - Cost: ₹50L capital + ₹5L/mo operations for 1000 parking spots.  
-   - Readiness: Pilot-phase; corporate backing; needs city data partnership.  
+3. **Vahan (Airtel) — Vehicle-to-Grid + Parking Intelligence**
+   - Product: IoT parking sensors + EV charging network; aggregated mobility signals.
+   - Deployment: Emerging; pilot in Bangalore.
+   - Cost: ₹50L capital + ₹5L/mo operations for 1000 parking spots.
+   - Readiness: Pilot-phase; corporate backing; needs city data partnership.
    - Contact: vahan.corporate@airtel.com
 
 ### Policy Recommendations
-1. **Congestion Charge Trial (0–6 months)**  
-   - Implement 8am–11am charge on 2 main corridors (₹100/day).  
-   - Exempt: buses, autos, essential services; subsidize low-income commuters.  
-   - Revenue: Reinvest 100% to transit + micro-mobility subsidy.  
-   - Rationale: Tested in London, Singapore, Milan; behavioral change faster than infrastructure alone.  
+1. **Congestion Charge Trial (0–6 months)**
+   - Implement 8am–11am charge on 2 main corridors (₹100/day).
+   - Exempt: buses, autos, essential services; subsidize low-income commuters.
+   - Revenue: Reinvest 100% to transit + micro-mobility subsidy.
+   - Rationale: Tested in London, Singapore, Milan; behavioral change faster than infrastructure alone.
    - Political Risk: Medium; mitigate with exemptions + transparency on spending.
 
-2. **Data Sharing Mandate (0–3 months)**  
-   - Require aggregated (anonymized) location data from Uber, Ola, Google Maps.  
-   - Enable GHMC + HMRL to access real-time demand patterns.  
-   - Rationale: Evidence-based signal timing + demand forecasting.  
+2. **Data Sharing Mandate (0–3 months)**
+   - Require aggregated (anonymized) location data from Uber, Ola, Google Maps.
+   - Enable GHMC + HMRL to access real-time demand patterns.
+   - Rationale: Evidence-based signal timing + demand forecasting.
    - Legal: Align with India's data governance draft; pilot under RTI exemption if needed.
 
-3. **Multi-Modal Ticketing (3–12 months)**  
-   - Single mobile wallet for metro, bus, auto, bike-sharing.  
-   - Integrate micro-mobility + transit fare capping.  
-   - Rationale: Reduces friction; enables demand-responsive pricing; unified data for planners.  
+3. **Multi-Modal Ticketing (3–12 months)**
+   - Single mobile wallet for metro, bus, auto, bike-sharing.
+   - Integrate micro-mobility + transit fare capping.
+   - Rationale: Reduces friction; enables demand-responsive pricing; unified data for planners.
    - Implementation: Lead by HMRL; partner with Bounce, Ola, state bus corp.
 
 ### Implementation Roadmap
