@@ -76,7 +76,8 @@ quality_check:
 dependency_audit:
   stage: security
   script:
-    - python -m pip_audit --requirement requirements.txt --requirement requirements-dev.txt
+    - pip-audit
+    - pip-audit -r requirements-dev.txt
 
 
 secret_scan:
