@@ -1,9 +1,15 @@
 import types
 
+import streamlit_app.app as app
 from backend.models.evidence import Evidence
 from backend.models.problem import Problem, ProblemAnalysis
 from backend.models.report import InnovationReport, Recommendation
-import streamlit_app.app as app
+from streamlit_app.components.report_view import (
+    evidence_frame,
+    evidence_map_frame,
+    score_chart,
+)
+from streamlit_app.translations import t
 
 
 class FakeContext:
@@ -99,13 +105,19 @@ class FakeStreamlit:
         count = len(spec) if not isinstance(spec, int) else spec
         return [FakeContext() for _ in range(count)]
 
-    def radio(self, label, options, index=0, label_visibility=None):
+    def radio(self, label, options, index=0, label_visibility=None, format_func=None):
+        return options[index]
+
+    def selectbox(self, label, options, index=0, format_func=None):
         return options[index]
 
     def button(self, *args, **kwargs):
         return kwargs.get("return_value", False)
 
     def status(self, *args, **kwargs):
+        return FakeContext()
+
+    def spinner(self, *args, **kwargs):
         return FakeContext()
 
     def expander(self, *args, **kwargs):
@@ -177,6 +189,7 @@ def test_initialize_sets_session_state(monkeypatch):
     app.initialize()
     assert fake_st.session_state["page"] == "Dashboard"
     assert fake_st.session_state["report"] is None
+    assert fake_st.session_state["language"] == "en"
 
 
 def test_hero_renders_markdown(monkeypatch):
@@ -187,7 +200,7 @@ def test_hero_renders_markdown(monkeypatch):
         captured["text"] = text
         captured["unsafe"] = unsafe_allow_html
 
-    fake_st.markdown = capture_markdown
+    monkeypatch.setattr(fake_st, "markdown", capture_markdown)
     monkeypatch.setattr(app, "st", fake_st)
     app.hero("TEST", "Title", "Description")
     assert "TEST" in captured["text"]
@@ -203,6 +216,7 @@ def test_sidebar_assigns_selected_page(monkeypatch):
     )
     app.sidebar()
     assert fake_st.session_state["page"] == "Dashboard"
+    assert fake_st.session_state["language"] == "en"
 
 
 def test_render_dashboard_calls_repository_and_renders(monkeypatch):
@@ -229,12 +243,12 @@ def test_render_dashboard_calls_repository_and_renders(monkeypatch):
 def test_render_upload_sets_report_after_analysis(monkeypatch):
     fake_st = FakeStreamlit()
     fake_st.session_state["page"] = "Upload Problem"
-    fake_st.form_submit_button = lambda *args, **kwargs: False
+    monkeypatch.setattr(fake_st, "form_submit_button", lambda *args, **kwargs: False)
     monkeypatch.setattr(app, "st", fake_st)
     monkeypatch.setattr(
         app,
         "render_problem_form",
-        lambda: Problem(
+        lambda *_args: Problem(
             text="A" * 40,
             location="Hyderabad",
             sector="Transport",
@@ -261,7 +275,7 @@ def test_require_report_warns_when_missing(monkeypatch):
     def warn(*args, **kwargs):
         called["warning"] = True
 
-    fake_st.warning = warn
+    monkeypatch.setattr(fake_st, "warning", warn)
     monkeypatch.setattr(app, "st", fake_st)
     result = app.require_report()
     assert result is None
@@ -299,7 +313,21 @@ def test_render_download_with_report(monkeypatch):
 
 def test_report_view_helpers():
     fake_report = make_fake_report()
-    figure = app.score_chart(fake_report)
-    frame = app.evidence_frame(fake_report)
+    figure = score_chart(fake_report)
+    frame = evidence_frame(fake_report)
     assert figure is not None
     assert "Evidence" in frame.columns
+
+
+def test_translation_helper_supports_telugu_and_fallback():
+    assert t("run_analysis", "te") == "ఆవిష్కరణ విశ్లేషణ నడపండి"
+    assert t("missing_key", "hi") == "missing_key"
+
+
+def test_evidence_map_frame_contains_marker_fields():
+    fake_report = make_fake_report()
+    frame = evidence_map_frame(fake_report)
+    assert frame.iloc[0]["title"] == "Test evidence"
+    assert frame.iloc[0]["location"] == "Hyderabad"
+    assert "lat" in frame.columns
+    assert "lon" in frame.columns
