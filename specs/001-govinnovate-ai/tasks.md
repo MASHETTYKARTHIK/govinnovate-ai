@@ -9,8 +9,8 @@ This document breaks the POC into ordered, parallelizable tasks ready for Phase 
 ## Workstream 1: Backend Foundation (4 Weeks, 40 SP)
 
 ### T1.1: FastAPI Backend Scaffold (3 SP)
-**Owner:** Backend Lead  
-**Depends On:** None  
+**Owner:** Backend Lead
+**Depends On:** None
 **Description:**
 - Create FastAPI project skeleton (app.py, requirements.txt, .env template).
 - Setup project structure: `src/api`, `src/agents`, `src/rag`, `src/models`.
@@ -29,8 +29,8 @@ This document breaks the POC into ordered, parallelizable tasks ready for Phase 
 ---
 
 ### T1.2: Environment & Secrets Management (2 SP)
-**Owner:** DevOps / Backend  
-**Depends On:** T1.1  
+**Owner:** DevOps / Backend
+**Depends On:** T1.1
 **Description:**
 - Create `.env.template` with required variables (LLM_API_KEY, VECTOR_DB_PATH, etc.).
 - Setup `python-dotenv` for local development.
@@ -47,8 +47,8 @@ This document breaks the POC into ordered, parallelizable tasks ready for Phase 
 ---
 
 ### T1.3: Database Models & Migrations (5 SP)
-**Owner:** Backend / Database  
-**Depends On:** T1.1  
+**Owner:** Backend / Database
+**Depends On:** T1.1
 **Description:**
 - Define SQLAlchemy ORM models (Problems, Reports, Documents, Chunks, Embeddings, Scores, AgentLogs).
 - Create Alembic migrations.
@@ -66,8 +66,8 @@ This document breaks the POC into ordered, parallelizable tasks ready for Phase 
 ---
 
 ### T1.4: LLM Integration Layer (5 SP)
-**Owner:** ML / Backend  
-**Depends On:** T1.1, T1.2  
+**Owner:** ML / Backend
+**Depends On:** T1.1, T1.2
 **Description:**
 - Wrap OpenAI API (GPT-4 + Embeddings).
 - Create `llm_client.py`: methods for completion, embedding, token counting.
@@ -86,8 +86,8 @@ This document breaks the POC into ordered, parallelizable tasks ready for Phase 
 ---
 
 ### T1.5: Vector DB Integration (FAISS) (4 SP)
-**Owner:** Backend / ML  
-**Depends On:** T1.1, T1.3, T1.4  
+**Owner:** Backend / ML
+**Depends On:** T1.1, T1.3, T1.4
 **Description:**
 - Setup FAISS (pip install faiss-cpu).
 - Create `vector_store.py`: methods for add_vector, search, load, save.
@@ -106,8 +106,8 @@ This document breaks the POC into ordered, parallelizable tasks ready for Phase 
 ---
 
 ### T1.6: RAG Ingestion Pipeline (6 SP)
-**Owner:** Data / Backend  
-**Depends On:** T1.3, T1.4, T1.5  
+**Owner:** Data / Backend
+**Depends On:** T1.3, T1.4, T1.5
 **Description:**
 - Create `ingestion.py`: document parsing (PDF, CSV, TXT).
 - Implement chunking: semantic chunking (500–800 tokens, 50–100 overlap).
@@ -127,8 +127,8 @@ This document breaks the POC into ordered, parallelizable tasks ready for Phase 
 ---
 
 ### T1.7: Testing Framework & Unit Tests (5 SP)
-**Owner:** QA / Backend  
-**Depends On:** All T1.x  
+**Owner:** QA / Backend
+**Depends On:** All T1.x
 **Description:**
 - Setup pytest + fixtures.
 - Write unit tests for LLM client (mock), vector store (in-memory), ingestion.
@@ -149,8 +149,8 @@ This document breaks the POC into ordered, parallelizable tasks ready for Phase 
 ## Workstream 2: Agents & Orchestration (3 Weeks, 35 SP)
 
 ### T2.1: Problem Analyzer Agent (5 SP)
-**Owner:** ML / Agent Dev  
-**Depends On:** T1.4  
+**Owner:** ML / Agent Dev
+**Depends On:** T1.4
 **Description:**
 - Create `agents/problem_analyzer.py`.
 - Design prompt template: extract title, tags, KPIs, constraints from free-text input.
@@ -170,8 +170,8 @@ This document breaks the POC into ordered, parallelizable tasks ready for Phase 
 ---
 
 ### T2.2: Retrieval Coordinator Agent (6 SP)
-**Owner:** Backend / ML  
-**Depends On:** T1.4, T1.5, T2.1  
+**Owner:** Backend / ML
+**Depends On:** T1.4, T1.5, T2.1
 **Description:**
 - Create `agents/retrieval_coordinator.py`.
 - Implement retrieval pipeline: query embed → hybrid search (vector + keyword) → rank → deduplicate.
@@ -191,8 +191,8 @@ This document breaks the POC into ordered, parallelizable tasks ready for Phase 
 ---
 
 ### T2.3: Report Generator Agent (7 SP)
-**Owner:** ML / Backend  
-**Depends On:** T1.4, T2.1, T2.2  
+**Owner:** ML / Backend
+**Depends On:** T1.4, T2.1, T2.2
 **Description:**
 - Create `agents/report_generator.py`.
 - Design prompt template for synthesis: input retrieved context + analyzed problem → generate 8 sections (Analysis, Cases, Research, Startups, Policy, Roadmap, Cost, Impact).
@@ -212,8 +212,8 @@ This document breaks the POC into ordered, parallelizable tasks ready for Phase 
 ---
 
 ### T2.4: Orchestrator (Sequential) (5 SP)
-**Owner:** Backend  
-**Depends On:** T2.1, T2.2, T2.3  
+**Owner:** Backend
+**Depends On:** T2.1, T2.2, T2.3
 **Description:**
 - Create `orchestrator.py`: Main coordinator.
 - Sequential execution: Problem Analyzer → Retrieval → Report Generator.
@@ -233,8 +233,8 @@ This document breaks the POC into ordered, parallelizable tasks ready for Phase 
 ---
 
 ### T2.5: Agent Tests & Integration (2 SP)
-**Owner:** QA / Backend  
-**Depends On:** T2.1, T2.2, T2.3, T2.4  
+**Owner:** QA / Backend
+**Depends On:** T2.1, T2.2, T2.3, T2.4
 **Description:**
 - Write integration tests: mock vector DB, test E2E flow.
 - Create test dataset (5–10 example problems + expected outputs).
@@ -254,8 +254,8 @@ This document breaks the POC into ordered, parallelizable tasks ready for Phase 
 ## Workstream 3: API & Data Layer (2 Weeks, 25 SP)
 
 ### T3.1: Problem API Endpoints (4 SP)
-**Owner:** Backend  
-**Depends On:** T1.1, T1.3, T2.4  
+**Owner:** Backend
+**Depends On:** T1.1, T1.3, T2.4
 **Description:**
 - Implement `POST /api/v1/problems` (create problem).
 - Implement `GET /api/v1/problems/{id}` (fetch problem details).
@@ -274,8 +274,8 @@ This document breaks the POC into ordered, parallelizable tasks ready for Phase 
 ---
 
 ### T3.2: Analysis API Endpoint (4 SP)
-**Owner:** Backend  
-**Depends On:** T2.4, T3.1  
+**Owner:** Backend
+**Depends On:** T2.4, T3.1
 **Description:**
 - Implement `POST /api/v1/problems/{id}/analyze` (trigger analysis).
 - Call orchestrator; return job status + report_id.
@@ -293,8 +293,8 @@ This document breaks the POC into ordered, parallelizable tasks ready for Phase 
 ---
 
 ### T3.3: Report API Endpoints (4 SP)
-**Owner:** Backend  
-**Depends On:** T3.2  
+**Owner:** Backend
+**Depends On:** T3.2
 **Description:**
 - Implement `GET /api/v1/reports/{id}` (fetch report).
 - Implement `GET /api/v1/reports/{id}/export?format=pdf|md|json` (export).
@@ -311,8 +311,8 @@ This document breaks the POC into ordered, parallelizable tasks ready for Phase 
 ---
 
 ### T3.4: Search API Endpoint (3 SP)
-**Owner:** Backend  
-**Depends On:** T2.2, T3.1  
+**Owner:** Backend
+**Depends On:** T2.2, T3.1
 **Description:**
 - Implement `POST /api/v1/search` (full-text + semantic search).
 - Query parameters: query text, filters (type, year, geo), k.
@@ -328,8 +328,8 @@ This document breaks the POC into ordered, parallelizable tasks ready for Phase 
 ---
 
 ### T3.5: Admin API (Ingestion) (3 SP)
-**Owner:** Backend  
-**Depends On:** T1.6, T3.1  
+**Owner:** Backend
+**Depends On:** T1.6, T3.1
 **Description:**
 - Implement `POST /admin/ingest` (upload dataset).
 - Accept CSV/PDF upload; trigger ingestion pipeline.
@@ -345,8 +345,8 @@ This document breaks the POC into ordered, parallelizable tasks ready for Phase 
 ---
 
 ### T3.6: API Documentation & OpenAPI (2 SP)
-**Owner:** Backend  
-**Depends On:** T3.1, T3.2, T3.3, T3.4, T3.5  
+**Owner:** Backend
+**Depends On:** T3.1, T3.2, T3.3, T3.4, T3.5
 **Description:**
 - Add docstrings + Pydantic models for all endpoints.
 - Generate OpenAPI spec (FastAPI auto-generates).
@@ -364,8 +364,8 @@ This document breaks the POC into ordered, parallelizable tasks ready for Phase 
 ## Workstream 4: Frontend (2 Weeks, 28 SP)
 
 ### T4.1: React Scaffold + Setup (3 SP)
-**Owner:** Frontend  
-**Depends On:** None  
+**Owner:** Frontend
+**Depends On:** None
 **Description:**
 - Create React app (CRA or Vite).
 - Setup TypeScript, ESLint, Prettier.
@@ -383,8 +383,8 @@ This document breaks the POC into ordered, parallelizable tasks ready for Phase 
 ---
 
 ### T4.2: Upload Page Component (5 SP)
-**Owner:** Frontend  
-**Depends On:** T4.1, T3.1  
+**Owner:** Frontend
+**Depends On:** T4.1, T3.1
 **Description:**
 - Create form component: text input (problem), optional fields (location, budget, sector).
 - Add validation: text required, length 50–1000 chars.
@@ -403,8 +403,8 @@ This document breaks the POC into ordered, parallelizable tasks ready for Phase 
 ---
 
 ### T4.3: Analysis/Results Page Component (8 SP)
-**Owner:** Frontend  
-**Depends On:** T4.1, T3.2, T3.3  
+**Owner:** Frontend
+**Depends On:** T4.1, T3.2, T3.3
 **Description:**
 - Fetch report via `GET /api/v1/reports/{id}`.
 - Display problem summary card (title, tags, status).
@@ -424,8 +424,8 @@ This document breaks the POC into ordered, parallelizable tasks ready for Phase 
 ---
 
 ### T4.4: Report Page Component (5 SP)
-**Owner:** Frontend  
-**Depends On:** T4.1, T3.3  
+**Owner:** Frontend
+**Depends On:** T4.1, T3.3
 **Description:**
 - Display full report: sections (Analysis, Cases, Research, Startups, Policy, Roadmap, Cost, Impact).
 - Each section: title, content, related sources (collapsible).
@@ -445,8 +445,8 @@ This document breaks the POC into ordered, parallelizable tasks ready for Phase 
 ---
 
 ### T4.5: Dashboard / Home Page (3 SP)
-**Owner:** Frontend  
-**Depends On:** T4.1  
+**Owner:** Frontend
+**Depends On:** T4.1
 **Description:**
 - Landing page: "Get Started" button → Upload page.
 - "How It Works" explainer (3 steps with icons/graphics).
@@ -464,8 +464,8 @@ This document breaks the POC into ordered, parallelizable tasks ready for Phase 
 ---
 
 ### T4.6: Frontend Styling & UX Polish (4 SP)
-**Owner:** Frontend / Design  
-**Depends On:** T4.2, T4.3, T4.4, T4.5  
+**Owner:** Frontend / Design
+**Depends On:** T4.2, T4.3, T4.4, T4.5
 **Description:**
 - Apply consistent styling (Tailwind CSS or styled-components).
 - Color scheme: government-friendly (blues, grays, high contrast).
@@ -487,8 +487,8 @@ This document breaks the POC into ordered, parallelizable tasks ready for Phase 
 ## Workstream 5: Reporting & Export (1.5 Weeks, 15 SP)
 
 ### T5.1: JSON Report Model (2 SP)
-**Owner:** Backend  
-**Depends On:** T2.3  
+**Owner:** Backend
+**Depends On:** T2.3
 **Description:**
 - Define Pydantic model: Report (sections, scores, metadata).
 - Section model: title, content, sources (list of {title, url, confidence}).
@@ -505,8 +505,8 @@ This document breaks the POC into ordered, parallelizable tasks ready for Phase 
 ---
 
 ### T5.2: PDF Export (5 SP)
-**Owner:** Backend  
-**Depends On:** T5.1  
+**Owner:** Backend
+**Depends On:** T5.1
 **Description:**
 - Create Jinja2 HTML template for report.
 - Use wkhtmltopdf or Weasyprint to render HTML → PDF.
@@ -525,8 +525,8 @@ This document breaks the POC into ordered, parallelizable tasks ready for Phase 
 ---
 
 ### T5.3: Markdown Export (2 SP)
-**Owner:** Backend  
-**Depends On:** T5.1  
+**Owner:** Backend
+**Depends On:** T5.1
 **Description:**
 - Create Markdown formatter for report.
 - Output: structured Markdown with headings, lists, tables, links.
@@ -543,8 +543,8 @@ This document breaks the POC into ordered, parallelizable tasks ready for Phase 
 ---
 
 ### T5.4: Report Storage & Retrieval (2 SP)
-**Owner:** Backend  
-**Depends On:** T5.1, T5.2, T5.3, T3.3  
+**Owner:** Backend
+**Depends On:** T5.1, T5.2, T5.3, T3.3
 **Description:**
 - Store generated reports in S3 (or local FS for POC).
 - Index: report_id → S3 path.
@@ -562,8 +562,8 @@ This document breaks the POC into ordered, parallelizable tasks ready for Phase 
 ## Workstream 6: Data & Datasets (1 Week, 12 SP)
 
 ### T6.1: Dataset Curation & Preparation (5 SP)
-**Owner:** Data  
-**Depends On:** None  
+**Owner:** Data
+**Depends On:** None
 **Description:**
 - Identify 20–30 high-quality sources: research papers, case studies, startup info.
 - Focus on 2–3 sectors (transport, waste, water).
@@ -581,8 +581,8 @@ This document breaks the POC into ordered, parallelizable tasks ready for Phase 
 ---
 
 ### T6.2: Data Model Documentation (3 SP)
-**Owner:** Backend / Data  
-**Depends On:** T1.3, T6.1  
+**Owner:** Backend / Data
+**Depends On:** T1.3, T6.1
 **Description:**
 - Create `data-model.md`: describe all tables, fields, relationships.
 - Include ER diagram (Mermaid or PlantUML).
@@ -599,8 +599,8 @@ This document breaks the POC into ordered, parallelizable tasks ready for Phase 
 ---
 
 ### T6.3: Schema Examples & Sample Data (2 SP)
-**Owner:** Data  
-**Depends On:** T6.1  
+**Owner:** Data
+**Depends On:** T6.1
 **Description:**
 - Create example records for each entity (JSON + CSV).
 - Include sample research papers, case studies, startup profiles.
@@ -618,8 +618,8 @@ This document breaks the POC into ordered, parallelizable tasks ready for Phase 
 ## Workstream 7: Integration & Testing (1.5 Weeks, 20 SP)
 
 ### T7.1: End-to-End Integration Tests (5 SP)
-**Owner:** QA  
-**Depends On:** T3.1, T3.2, T3.3, T4.1, T5.1  
+**Owner:** QA
+**Depends On:** T3.1, T3.2, T3.3, T4.1, T5.1
 **Description:**
 - Test full flow: upload problem → analyze → fetch report → export PDF/Markdown.
 - Use test dataset (5 problems).
@@ -637,8 +637,8 @@ This document breaks the POC into ordered, parallelizable tasks ready for Phase 
 ---
 
 ### T7.2: Performance Benchmarking (3 SP)
-**Owner:** Backend / QA  
-**Depends On:** T7.1  
+**Owner:** Backend / QA
+**Depends On:** T7.1
 **Description:**
 - Benchmark latency: each agent, vector search, LLM call.
 - Identify bottlenecks.
@@ -655,8 +655,8 @@ This document breaks the POC into ordered, parallelizable tasks ready for Phase 
 ---
 
 ### T7.3: Manual Testing & UAT (5 SP)
-**Owner:** Product / QA  
-**Depends On:** T7.1  
+**Owner:** Product / QA
+**Depends On:** T7.1
 **Description:**
 - Test with real use cases (5–10 problem scenarios).
 - User walkthrough: can officer use UI without guidance?
@@ -673,8 +673,8 @@ This document breaks the POC into ordered, parallelizable tasks ready for Phase 
 ---
 
 ### T7.4: Documentation & Runbooks (4 SP)
-**Owner:** Tech Writer / DevOps  
-**Depends On:** All prior tasks  
+**Owner:** Tech Writer / DevOps
+**Depends On:** All prior tasks
 **Description:**
 - Create README: project overview, setup, running locally.
 - Create ARCHITECTURE.md: component overview, data flow diagrams.
@@ -692,8 +692,8 @@ This document breaks the POC into ordered, parallelizable tasks ready for Phase 
 ---
 
 ### T7.5: Demo Preparation (3 SP)
-**Owner:** Product  
-**Depends On:** T7.1, T7.4  
+**Owner:** Product
+**Depends On:** T7.1, T7.4
 **Description:**
 - Create demo script: 10–15 minute walkthrough of features.
 - Prepare sample data + problems.
@@ -733,7 +733,7 @@ Parallel Tracks (can start after T1.1 + T1.3):
   - Workstream 3: API (T3.1, T3.2, T3.3, T3.4)
   - Workstream 4: Frontend (T4.1, T4.2, T4.3, T4.4, T4.5, T4.6)
   - Workstream 6: Data (T6.1, T6.2, T6.3)
-  
+
 Final Integration:
   - Workstream 5: Reporting (T5.1, T5.2, T5.3, T5.4)
   - Workstream 7: Integration & Testing (T7.1, T7.2, T7.3, T7.4, T7.5)
@@ -741,10 +741,10 @@ Final Integration:
 
 ### Recommended Parallelization
 
-**Phase 1 (Week 1):** Backend foundation in series (T1.1 → T1.2 → T1.3 → T1.4 → T1.5).  
-**Phase 2 (Week 2):** Parallel: Agents (T2.1-4), API (T3.1-5), Frontend (T4.1-6), Data (T6.1-3).  
-**Phase 3 (Week 3):** Reporting (T5.1-4) + Integration tests (T7.1).  
-**Phase 4 (Week 4):** Perf tuning (T7.2), UAT (T7.3), Docs (T7.4), Demo (T7.5).  
+**Phase 1 (Week 1):** Backend foundation in series (T1.1 → T1.2 → T1.3 → T1.4 → T1.5).
+**Phase 2 (Week 2):** Parallel: Agents (T2.1-4), API (T3.1-5), Frontend (T4.1-6), Data (T6.1-3).
+**Phase 3 (Week 3):** Reporting (T5.1-4) + Integration tests (T7.1).
+**Phase 4 (Week 4):** Perf tuning (T7.2), UAT (T7.3), Docs (T7.4), Demo (T7.5).
 
 ---
 
@@ -785,5 +785,5 @@ Final Integration:
 
 ---
 
-**Last Updated:** 2026-06-09  
+**Last Updated:** 2026-06-09
 **Target Completion:** 2026-07-07 (POC ready for pilot)

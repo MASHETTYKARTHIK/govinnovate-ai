@@ -2,8 +2,8 @@
 
 ## Project Identity
 
-**Name:** GovInnovate AI  
-**Tagline:** AI-Powered Government Innovation Engine  
+**Name:** GovInnovate AI
+**Tagline:** AI-Powered Government Innovation Engine
 **Mission:** Accelerate government innovation adoption by converting local problem statements into prioritized, evidence-backed, and operational roadmaps using an AI-first retrieval + reasoning platform.
 
 ---
@@ -221,5 +221,5 @@
 
 ---
 
-**Last Updated:** 2026-06-09  
+**Last Updated:** 2026-06-09
 **Next Review:** 2026-06-30 (Post-POC)

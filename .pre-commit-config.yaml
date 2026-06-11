@@ -4,30 +4,55 @@
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
-
-      # Security hooks (so the compliance checker recognizes pre-commit security)
       - id: detect-private-key
       - id: detect-aws-credentials
 
   - repo: https://github.com/psf/black
-    rev: 24.4.2
+    rev: 26.3.1
     hooks:
       - id: black
 
-  - repo: https://github.com/pre-commit/mirrors-ruff
-    rev: v0.15.15
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.5.7
     hooks:
       - id: ruff
-        args: [check, .]
+        args: [--fix]
 
-  # Type checking
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v2.1.0
+    rev: v1.10.0
     hooks:
       - id: mypy
-        additional_dependencies: ['types-all']
-        args: [--ignore-missing-imports, --no-error-summary]
 
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.7.5
+    hooks:
+      - id: bandit
+        args: [--exclude, tests]
+        additional_dependencies: [pbr==5.11.1]
 
+  - repo: local
+    hooks:
+      - id: flake8
+        name: flake8
+        entry: flake8
+        language: system
+        pass_filenames: true
+        types: [python]
+      - id: pylint
+        name: pylint
+        entry: pylint
+        language: system
+        pass_filenames: true
+        types: [python]
+      - id: pyupgrade
+        name: pyupgrade
+        entry: pyupgrade
+        language: system
+        args: [--py311-plus]
+        pass_filenames: true
+        types: [python]
 
-
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.4.0
+    hooks:
+      - id: detect-secrets

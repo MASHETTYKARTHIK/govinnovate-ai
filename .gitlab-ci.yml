@@ -5,6 +5,7 @@
   - type_check
   - test
   - coverage
+  - quality
   - security
 
 variables:
@@ -25,11 +26,25 @@ format:
 lint:
   stage: lint
   script:
+    - apt-get update -y && apt-get install -y curl tar
+    - curl -sSL https://github.com/zricethezav/gitleaks/releases/latest/download/gitleaks-linux-amd64.tar.gz | tar xz -C /tmp
+    - chmod +x /tmp/gitleaks
+    - mv /tmp/gitleaks /usr/local/bin/gitleaks
+    - pre-commit install
+    - pre-commit run --all-files
     - ruff check .
+    - python -m ruff check .
+    - flake8 .
+    - python -m flake8 .
+    - pylint backend streamlit_app
+    - python -m pylint backend streamlit_app
+    - pyupgrade --py311-plus backend/**/*.py streamlit_app/**/*.py
+    - python -m pyupgrade --py311-plus backend/**/*.py streamlit_app/**/*.py
 
 type_check:
   stage: type_check
   script:
+    - mypy .
     - python -m mypy .
 
 test:
@@ -41,7 +56,8 @@ test:
 coverage:
   stage: coverage
   script:
-    - pytest --cov=backend --cov=streamlit_app --cov-report=xml:coverage.xml --cov-fail-under=60
+    - pytest --cov=. --cov-report=xml --cov-report=term
+    - pytest --cov=. --cov-report=xml --cov-fail-under=80
   artifacts:
     paths:
       - coverage.xml
@@ -50,6 +66,12 @@ coverage:
         coverage_format: cobertura
         path: coverage.xml
 
+
+quality_check:
+  stage: quality
+  script:
+    - vulture backend streamlit_app
+    - python -m vulture backend streamlit_app
 
 dependency_audit:
   stage: security

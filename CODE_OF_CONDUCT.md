@@ -68,4 +68,3 @@ and the safety of affected community members.
 
 This policy is based on common open-source community standards, including the
 Contributor Covenant, and is adapted for the GovInnovate AI project.
-

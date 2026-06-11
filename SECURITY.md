@@ -77,4 +77,3 @@ The hackathon MVP is designed for local demonstration data. Deployers are
 responsible for securing their environment, protecting sensitive datasets,
 restricting access, updating dependencies, and validating recommendations
 before operational use.
-

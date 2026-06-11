@@ -634,5 +634,5 @@ CREATE TABLE agent_logs (
 
 ---
 
-**Last Updated:** 2026-06-09  
+**Last Updated:** 2026-06-09
 **Next Review:** 2026-06-23 (after POC Sprint 2)

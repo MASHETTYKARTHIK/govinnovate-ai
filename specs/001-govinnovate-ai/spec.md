@@ -2,10 +2,10 @@
 
 ## Spec Overview
 
-**Feature Name:** GovInnovate AI Platform (MVP)  
-**Status:** POC → Pilot → Production  
-**Created:** 2026-06-09  
-**Owner:** Product Team  
+**Feature Name:** GovInnovate AI Platform (MVP)
+**Status:** POC → Pilot → Production
+**Created:** 2026-06-09
+**Owner:** Product Team
 **Stakeholders:** Government officials, policy analysts, innovation researchers
 
 ---
@@ -393,5 +393,5 @@ The following features are explicitly NOT included in the POC and deferred to Ph
 
 ---
 
-**Last Updated:** 2026-06-09  
+**Last Updated:** 2026-06-09
 **Next Review:** 2026-06-23 (mid-POC checkpoint)

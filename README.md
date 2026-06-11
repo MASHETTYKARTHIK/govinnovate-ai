@@ -159,13 +159,5 @@ Contributions, feedback, and ideas are welcome. Please follow the project guidel
 
 ## License
 
-This project is licensed under the GNU Affero General Public License v3.0 (AGPL-3.0).
-
-## Vision
-
-Enable every government officer to access global innovation knowledge and evidence-backed solutions within minutes, helping public institutions solve problems faster and more effectively.
-
----
-
-**GovInnovate AI**
-Transforming public-sector innovation through AI-powered research and decision support.
+## Project status
+If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
