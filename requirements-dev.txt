@@ -1,10 +1,14 @@
-black==24.4.2
+black==26.3.1
 ruff==0.15.15
 mypy==2.1.0
 pytest==9.0.3
 pytest-cov==7.1.0
+coverage==7.14.1
 pip-audit==2.9.0
 pre-commit==4.6.0
+bandit==1.7.5
+detect-secrets==1.4.0
+pbr==5.11.1
 git-cliff==2.13.1
 streamlit==1.58.0
 pandas==3.0.3
