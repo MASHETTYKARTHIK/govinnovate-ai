@@ -1,4 +1,4 @@
-﻿# GovInnovate AI\r\n\r\n**Project description:** AI-assisted public-sector innovation planning and evidence-backed decision support for government teams.\r\n\r\n## Getting started
+﻿# GovInnovate AI\r\n\r\n**Project description:** AI-assisted public-sector innovation planning and evidence-backed decision support platform for government teams.\r\n\r\n## Getting started
 
 To make it easy for you to get started with GitLab, here's a list of recommended next steps.
 
@@ -372,7 +372,7 @@ See `.specify/memory/constitution.md` for detailed security standards.
 |---------|------|--------|---------|
 | 1.0 | 2026-06-09 | Planning Complete | POC + SpecKit finalized; ready for Phase 2 implementation. |
 
-**Last Updated:** 2026-06-09  
+**Last Updated:** 2026-06-09
 **Next Milestone:** POC delivery (2026-07-07)
 
 ---
@@ -477,4 +477,3 @@ For open source projects, say how it is licensed.
 
 ## Project status
 If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
-
