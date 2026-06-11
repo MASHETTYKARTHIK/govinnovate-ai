@@ -31,10 +31,12 @@ lint:
     - pre-commit install
     - pre-commit run --all-files
     - ruff check .
+    - python -m ruff check .
 
 type_check:
   stage: type_check
   script:
+    - mypy .
     - python -m mypy .
 
 test:
@@ -45,7 +47,8 @@ test:
 coverage:
   stage: coverage
   script:
-    - pytest --cov=backend --cov=streamlit_app --cov-report=xml:coverage.xml --cov-fail-under=80
+    - pytest --cov=. --cov-report=xml --cov-report=term
+    - pytest --cov=. --cov-report=xml --cov-report=term --cov-fail-under=80
   artifacts:
     paths:
       - coverage.xml
