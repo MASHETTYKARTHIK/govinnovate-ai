@@ -6,6 +6,7 @@
       - id: end-of-file-fixer
       - id: detect-private-key
       - id: detect-aws-credentials
+        args: [--allow-missing-credentials]
 
   - repo: https://github.com/psf/black
     rev: 26.3.1
