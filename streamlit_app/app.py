@@ -1,8 +1,8 @@
 """Complete Streamlit MVP entry point for GovInnovate AI."""
 
+import sys
 from html import escape
 from pathlib import Path
-import sys
 
 # Streamlit can execute this file with only streamlit_app/ on sys.path.
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -212,7 +212,7 @@ def render_analysis() -> None:
     st.markdown("### Evidence map")
     categories = sorted({evidence.category for evidence in report.evidence})
     tabs = st.tabs(categories) if categories else []
-    for tab, category in zip(tabs, categories):
+    for tab, category in zip(tabs, categories, strict=False):
         with tab:
             rows = [
                 evidence
