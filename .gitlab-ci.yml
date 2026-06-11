@@ -4,6 +4,7 @@
   - type_check
   - test
   - coverage
+  - quality
   - security
 
 variables:
@@ -32,6 +33,12 @@ lint:
     - pre-commit run --all-files
     - ruff check .
     - python -m ruff check .
+    - flake8 .
+    - python -m flake8 .
+    - pylint backend streamlit_app
+    - python -m pylint backend streamlit_app
+    - pyupgrade --py311-plus backend/**/*.py streamlit_app/**/*.py
+    - python -m pyupgrade --py311-plus backend/**/*.py streamlit_app/**/*.py
 
 type_check:
   stage: type_check
@@ -48,16 +55,24 @@ coverage:
   stage: coverage
   script:
     - pytest --cov=. --cov-report=xml --cov-report=term
-    - pytest --cov=. --cov-report=xml --cov-report=term --cov-fail-under=80
+    - pytest --cov=. --cov-report=xml --cov-fail-under=80
   artifacts:
     paths:
       - coverage.xml
     reports:
       cobertura: coverage.xml
 
+quality_check:
+  stage: quality
+  script:
+    - vulture backend streamlit_app
+    - python -m vulture backend streamlit_app
+
 dependency_audit:
   stage: security
   script:
+    - semgrep scan
+    - python -m semgrep scan
     - pip-audit -r requirements-dev.txt
 
 secret_scan:
