@@ -24,6 +24,12 @@ format:
 lint:
   stage: lint
   script:
+    - apt-get update -y && apt-get install -y curl tar
+    - curl -sSL https://github.com/zricethezav/gitleaks/releases/latest/download/gitleaks-linux-amd64.tar.gz | tar xz -C /tmp
+    - chmod +x /tmp/gitleaks
+    - mv /tmp/gitleaks /usr/local/bin/gitleaks
+    - pre-commit install
+    - pre-commit run --all-files
     - ruff check .
 
 type_check:
@@ -39,7 +45,7 @@ test:
 coverage:
   stage: coverage
   script:
-    - pytest --cov=backend --cov=streamlit_app --cov-report=xml:coverage.xml --cov-fail-under=60
+    - pytest --cov=backend --cov=streamlit_app --cov-report=xml:coverage.xml --cov-fail-under=80
   artifacts:
     paths:
       - coverage.xml
@@ -49,7 +55,7 @@ coverage:
 dependency_audit:
   stage: security
   script:
-    - python -m pip_audit
+    - pip-audit -r requirements-dev.txt
 
 secret_scan:
   stage: security
