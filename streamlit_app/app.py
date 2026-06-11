@@ -19,8 +19,19 @@ from backend.repositories.report_repository import ReportRepository
 from backend.services.orchestrator import AnalysisOrchestrator
 from backend.services.report_service import generate_markdown
 from streamlit_app.components.problem_form import render_problem_form
-from streamlit_app.components.report_view import evidence_frame, score_chart
+from streamlit_app.components.report_view import (
+    evidence_frame,
+    evidence_map,
+    score_chart,
+)
 from streamlit_app.styles import THEME_CSS
+from streamlit_app.translations import (
+    DEFAULT_LANGUAGE,
+    LANGUAGE_OPTIONS,
+)
+from streamlit_app.translations import (
+    t as translate,
+)
 
 PAGES = (
     "Dashboard",
@@ -30,6 +41,14 @@ PAGES = (
     "Download Report",
 )
 
+PAGE_KEYS = {
+    "Dashboard": "page_dashboard",
+    "Upload Problem": "page_upload",
+    "AI Analysis": "page_analysis",
+    "Recommendations": "page_recommendations",
+    "Download Report": "page_download",
+}
+
 
 def initialize() -> None:
     """Configure the application and shared state."""
@@ -37,6 +56,7 @@ def initialize() -> None:
     st.markdown(THEME_CSS, unsafe_allow_html=True)
     st.session_state.setdefault("page", "Dashboard")
     st.session_state.setdefault("report", None)
+    st.session_state.setdefault("language", DEFAULT_LANGUAGE)
 
 
 def navigate(page: str) -> None:
@@ -48,29 +68,51 @@ def navigate(page: str) -> None:
 def sidebar() -> None:
     """Render professional sidebar navigation."""
     with st.sidebar:
-        st.markdown("## GOVINNOVATE AI")
-        st.caption("PUBLIC INNOVATION INTELLIGENCE")
+        st.markdown(f"## {t('app_title').upper()}")
+        st.caption(t("public_innovation"))
+        st.markdown("---")
+        language = st.selectbox(
+            t("language"),
+            tuple(LANGUAGE_OPTIONS),
+            index=tuple(LANGUAGE_OPTIONS).index(selected_language()),
+            format_func=lambda code: LANGUAGE_OPTIONS[code],
+        )
+        st.session_state.language = language
         st.markdown("---")
         selected = st.radio(
             "Navigation",
             PAGES,
             index=PAGES.index(st.session_state.page),
             label_visibility="collapsed",
+            format_func=lambda page: t(PAGE_KEYS[page]),
         )
         st.session_state.page = selected
         st.markdown("---")
         report = current_report()
         if report:
-            st.success(f"Active brief: {report.report_id}")
+            st.success(f"{t('active_brief')}: {report.report_id}")
             st.caption(report.title)
         else:
-            st.info("Create an analysis to unlock the full workspace.")
-        st.caption("Local datasets | Mock AI | SQLite")
+            st.info(t("unlock_message"))
+        st.caption(t("local_stack"))
 
 
 def current_report() -> InnovationReport | None:
     """Return the active report from session state."""
-    return st.session_state.get("report")
+    report = st.session_state.get("report")
+    return report if isinstance(report, InnovationReport) else None
+
+
+def selected_language() -> str:
+    """Return the active UI language code."""
+    language = st.session_state.get("language", DEFAULT_LANGUAGE)
+    return language if isinstance(language, str) else DEFAULT_LANGUAGE
+
+
+def t(key: str, **values: object) -> str:
+    """Translate a UI string for the active Streamlit session."""
+    text = translate(key, selected_language())
+    return text.format(**values) if values else text
 
 
 def hero(eyebrow: str, title: str, description: str) -> None:
@@ -86,26 +128,26 @@ def hero(eyebrow: str, title: str, description: str) -> None:
 def render_dashboard() -> None:
     """Render portfolio analytics and recent activity."""
     hero(
-        "MISSION CONTROL",
-        "Turn public challenges into pilot-ready action.",
-        "Explore local evidence, run transparent mock AI analysis, and produce decision-ready briefs.",
+        t("dashboard_eyebrow"),
+        t("dashboard_title"),
+        t("dashboard_description"),
     )
     counts = DatasetRepository().counts()
     history = ReportRepository().history()
     cols = st.columns(4)
-    cols[0].metric("Evidence records", sum(counts.values()), "Local JSON")
-    cols[1].metric("Datasets online", len(counts), "100% local")
-    cols[2].metric("Reports generated", len(history), "SQLite tracked")
+    cols[0].metric(t("evidence_records"), sum(counts.values()), "Local JSON")
+    cols[1].metric(t("datasets_online"), len(counts), "100% local")
+    cols[2].metric(t("reports_generated"), len(history), "SQLite tracked")
     average = (
         round(sum(row["impact_score"] for row in history) / len(history))
         if history
         else 0
     )
-    cols[3].metric("Average impact", f"{average}/100", "Across reports")
+    cols[3].metric(t("average_impact"), f"{average}/100", "Across reports")
 
     left, right = st.columns([1.35, 1])
     with left:
-        st.markdown("### Evidence landscape")
+        st.markdown(f"### {t('evidence_landscape')}")
         frame = pd.DataFrame(
             {"Dataset": list(counts), "Records": list(counts.values())}
         )
@@ -119,48 +161,36 @@ def render_dashboard() -> None:
         )
         st.plotly_chart(chart, width="stretch")
     with right:
-        st.markdown("### Workflow")
-        st.markdown(
-            """
-            <div class="glass-card">
-              <b>01. Define</b><p class="muted">Capture local needs, constraints, budget, and timing.</p>
-              <b>02. Discover</b><p class="muted">Rank research, cases, startups, and programs.</p>
-              <b>03. Decide</b><p class="muted">Compare impact, innovation, cost, and policy actions.</p>
-              <b>04. Deliver</b><p class="muted">Download an auditable Markdown brief.</p>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-        if st.button("Start a new analysis", type="primary", width="stretch"):
+        st.markdown(f"### {t('workflow')}")
+        st.markdown(t("workflow_html"), unsafe_allow_html=True)
+        if st.button(t("new_analysis"), type="primary", width="stretch"):
             navigate("Upload Problem")
 
-    st.markdown("### Recent analyses")
+    st.markdown(f"### {t('recent_analyses')}")
     if history:
         st.dataframe(pd.DataFrame(history), width="stretch", hide_index=True)
     else:
-        st.caption("No reports yet. Your first analysis will appear here.")
+        st.caption(t("no_reports"))
 
 
 def render_upload() -> None:
     """Render problem intake and execute the workflow."""
     hero(
-        "CHALLENGE INTAKE",
-        "Describe the public problem.",
-        "The stronger the context, the sharper the evidence matching and recommendations.",
+        t("challenge_intake"),
+        t("upload_title"),
+        t("upload_description"),
     )
-    problem = render_problem_form()
+    problem = render_problem_form(t)
     if problem:
-        with st.status(
-            "GovInnovate AI is building the innovation brief...", expanded=True
-        ) as status:
-            st.write("Structuring the challenge and extracting decision signals")
-            st.write("Searching the local FAISS-style evidence index")
+        with st.status(t("processing_title"), expanded=True) as status:
+            st.write(t("processing_structure"))
+            st.write(t("processing_search"))
             report = AnalysisOrchestrator().run(problem)
-            st.write("Scoring interventions and assembling the report")
-            status.update(label="Analysis complete", state="complete")
+            st.write(t("processing_score"))
+            status.update(label=t("analysis_complete"), state="complete")
         st.session_state.report = report
-        st.success(f"Created {report.report_id}")
-        if st.button("Open AI analysis", type="primary"):
+        st.success(t("created_report", report_id=report.report_id))
+        if st.button(t("open_analysis"), type="primary"):
             navigate("AI Analysis")
 
 
@@ -168,8 +198,8 @@ def require_report() -> InnovationReport | None:
     """Prompt for an analysis when a downstream page has no report."""
     report = current_report()
     if not report:
-        st.warning("Run an innovation analysis first to unlock this view.")
-        if st.button("Go to problem upload", type="primary"):
+        st.warning(t("require_report"))
+        if st.button(t("go_upload"), type="primary"):
             navigate("Upload Problem")
     return report
 
@@ -177,31 +207,31 @@ def require_report() -> InnovationReport | None:
 def render_analysis() -> None:
     """Render transparent AI reasoning and evidence."""
     hero(
-        "AI REASONING",
-        "Understand the challenge signals.",
-        "Every output is derived from local data.",
+        t("reasoning_eyebrow"),
+        t("reasoning_title"),
+        t("reasoning_description"),
     )
     report = require_report()
     if not report:
         return
     cols = st.columns(3)
-    cols[0].metric("Readiness", f"{report.analysis.readiness_score}/100")
-    cols[1].metric("Urgency", f"{report.analysis.urgency_score}/100")
-    cols[2].metric("Evidence matched", len(report.evidence))
+    cols[0].metric(t("readiness"), f"{report.analysis.readiness_score}/100")
+    cols[1].metric(t("urgency"), f"{report.analysis.urgency_score}/100")
+    cols[2].metric(t("evidence_matched"), len(report.evidence))
     st.markdown(
         f'<div class="glass-card">{escape(report.summary)}</div>',
         unsafe_allow_html=True,
     )
     left, right = st.columns(2)
     with left:
-        st.markdown("### Core challenges")
+        st.markdown(f"### {t('core_challenges')}")
         for challenge in report.analysis.challenges:
             st.markdown(f"- {challenge}")
     with right:
-        st.markdown("### Strategic objectives")
+        st.markdown(f"### {t('strategic_objectives')}")
         for objective in report.analysis.objectives:
             st.markdown(f"- {objective}")
-    st.markdown("### Extracted signals")
+    st.markdown(f"### {t('extracted_signals')}")
     st.markdown(
         " ".join(
             f'<span class="badge">{escape(tag)}</span>'
@@ -209,7 +239,17 @@ def render_analysis() -> None:
         ),
         unsafe_allow_html=True,
     )
-    st.markdown("### Evidence map")
+    st.markdown(f"### {t('evidence_map')}")
+    with st.spinner(t("map_loading")):
+        map_figure = evidence_map(report)
+    if map_figure.data:
+        st.plotly_chart(map_figure, width="stretch")
+    elif report.evidence:
+        st.info(t("map_unavailable"))
+    else:
+        st.info(t("map_empty"))
+
+    st.markdown(f"### {t('matched_evidence')}")
     categories = sorted({evidence.category for evidence in report.evidence})
     tabs = st.tabs(categories) if categories else []
     for tab, category in zip(tabs, categories, strict=False):
@@ -227,9 +267,9 @@ def render_analysis() -> None:
 def render_recommendations() -> None:
     """Render scored actions, policy recommendations, and comparisons."""
     hero(
-        "DECISION WORKSPACE",
-        "Compare pilot-ready interventions.",
-        "Prioritized by local evidence match.",
+        t("workspace_eyebrow"),
+        t("workspace_title"),
+        t("workspace_description"),
     )
     report = require_report()
     if not report:
@@ -241,14 +281,14 @@ def render_recommendations() -> None:
             expanded=index == 1,
         ):
             a, b, c = st.columns(3)
-            a.metric("Confidence", f"{item.confidence:.0%}")
-            b.metric("Estimated cost", item.estimated_cost)
-            c.metric("Timeframe", item.timeframe)
+            a.metric(t("confidence"), f"{item.confidence:.0%}")
+            b.metric(t("estimated_cost"), item.estimated_cost)
+            c.metric(t("timeframe"), item.timeframe)
             st.write(item.rationale)
-            st.markdown("**Pilot actions**")
+            st.markdown(f"**{t('pilot_actions')}**")
             for step in item.action_steps:
                 st.markdown(f"- {step}")
-    st.markdown("### Policy recommendations")
+    st.markdown(f"### {t('policy_recommendations')}")
     for policy in report.policy_recommendations:
         st.markdown(
             f'<div class="glass-card">{escape(policy)}</div>', unsafe_allow_html=True
@@ -258,30 +298,30 @@ def render_recommendations() -> None:
 def render_download() -> None:
     """Render final report preview and Markdown download."""
     hero(
-        "REPORT CENTER",
-        "Export the decision brief.",
-        "A portable, auditable artifact for stakeholders.",
+        t("report_center"),
+        t("report_title"),
+        t("report_description"),
     )
     report = require_report()
     if not report:
         return
     markdown = generate_markdown(report)
     cols = st.columns(4)
-    cols[0].metric("Report ID", report.report_id)
-    cols[1].metric("Recommendations", len(report.recommendations))
-    cols[2].metric("Evidence records", len(report.evidence))
-    cols[3].metric("Dataset", report.dataset_version)
+    cols[0].metric(t("report_id"), report.report_id)
+    cols[1].metric(t("recommendations"), len(report.recommendations))
+    cols[2].metric(t("evidence_records"), len(report.evidence))
+    cols[3].metric(t("dataset"), report.dataset_version)
     st.download_button(
-        "Download Markdown report",
+        t("download_markdown"),
         markdown,
         file_name=f"{report.report_id.lower()}-innovation-brief.md",
         mime="text/markdown",
         type="primary",
         width="stretch",
     )
-    with st.expander("Preview evidence register"):
+    with st.expander(t("evidence_register")):
         st.dataframe(evidence_frame(report), width="stretch", hide_index=True)
-    with st.expander("Preview full Markdown report"):
+    with st.expander(t("full_report")):
         st.markdown(markdown)
 
 
