@@ -1,27 +1,29 @@
 """Guided problem intake form."""
 
+from collections.abc import Callable
+
 from backend.models.problem import Problem
 
 
-def render_problem_form() -> Problem | None:
+def render_problem_form(t: Callable[[str], str] | None = None) -> Problem | None:
     """Render a complete government challenge intake form."""
     import streamlit as st
 
+    translate = t or (lambda key: key)
     with st.form("problem-form"):
-        st.markdown("### Define the challenge")
+        st.markdown(f"### {translate('challenge_define')}")
         problem_text = st.text_area(
-            "Problem statement",
-            placeholder=(
-                "Describe the challenge, affected communities, current constraints, "
-                "and the outcome the government wants to achieve."
-            ),
+            translate("problem_statement"),
+            placeholder=translate("problem_help"),
             height=200,
         )
         left, right = st.columns(2)
         with left:
-            location = st.text_input("Location", placeholder="Hyderabad, Telangana")
+            location = st.text_input(
+                translate("location"), placeholder="Hyderabad, Telangana"
+            )
             sector = st.selectbox(
-                "Sector",
+                translate("sector"),
                 (
                     "Transport",
                     "Waste",
@@ -33,12 +35,12 @@ def render_problem_form() -> Problem | None:
                 ),
             )
             target_population = st.text_input(
-                "Target population",
+                translate("target_population"),
                 placeholder="Commuters in high-congestion corridors",
             )
         with right:
             budget = st.selectbox(
-                "Indicative budget",
+                translate("indicative_budget"),
                 (
                     "Not specified",
                     "Under INR 10 lakh",
@@ -48,22 +50,20 @@ def render_problem_form() -> Problem | None:
                 ),
             )
             timeframe = st.selectbox(
-                "Target timeframe",
+                translate("target_timeframe"),
                 ("0-3 months", "3-6 months", "6-12 months", "12-24 months"),
             )
             st.info(
                 "GovInnovate AI uses only local sample datasets and transparent mock reasoning."
             )
         submitted = st.form_submit_button(
-            "Run innovation analysis", type="primary", width="stretch"
+            translate("run_analysis"), type="primary", width="stretch"
         )
 
     if not submitted:
         return None
     if len(problem_text.strip()) < 30:
-        st.error(
-            "Please provide at least 30 characters so the analysis has enough context."
-        )
+        st.error(translate("problem_short"))
         return None
     return Problem(
         text=problem_text.strip(),
