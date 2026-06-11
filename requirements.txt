@@ -7,3 +7,4 @@ openai
 google-generativeai
 anthropic
 pydantic
+types-requests
