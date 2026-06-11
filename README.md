@@ -31,6 +31,13 @@ GovInnovate AI transforms a simple problem statement into a structured innovatio
 * Expected impact assessment
 * Implementation roadmap
 
+## AI Features
+
+* Local AI governance insights through Ollama
+* BYOK cloud inference with OpenAI, Gemini, Anthropic, or Groq
+* Secure session-only API key input for privacy-preserving usage
+* Policy analysis and report generation support in the Streamlit UI
+
 ## Example
 
 **Input**
@@ -109,9 +116,23 @@ govinnovate-ai/
 ```bash
 python -m venv venv
 source venv/bin/activate
-
 pip install -r requirements.txt
 ```
+
+### Ollama Setup
+
+1. Install Ollama according to the official instructions.
+2. Start a local Ollama server:
+
+```bash
+ollama run llama3
+```
+
+3. In the Streamlit sidebar, switch to `Local Ollama`, enter `http://localhost:11434`, and select a model.
+
+### BYOK Cloud API
+
+Use the sidebar to select a cloud provider and enter your API key securely. Supported providers are `OpenAI`, `Gemini`, `Anthropic`, and `Groq`.
 
 ### Frontend Setup
 

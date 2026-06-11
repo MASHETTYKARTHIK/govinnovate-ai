@@ -13,11 +13,14 @@ import pandas as pd
 import plotly.express as px
 import streamlit as st
 
+from backend.ai.ollama_client import generate_with_ollama
+from backend.ai.providers import generate_response
 from backend.models.report import InnovationReport
 from backend.repositories.dataset_repository import DatasetRepository
 from backend.repositories.report_repository import ReportRepository
 from backend.services.orchestrator import AnalysisOrchestrator
 from backend.services.report_service import generate_markdown
+from streamlit_app.components.ai_config import initialize_ai_state, render_ai_sidebar
 from streamlit_app.components.problem_form import render_problem_form
 from streamlit_app.components.report_view import (
     evidence_frame,
@@ -57,6 +60,7 @@ def initialize() -> None:
     st.session_state.setdefault("page", "Dashboard")
     st.session_state.setdefault("report", None)
     st.session_state.setdefault("language", DEFAULT_LANGUAGE)
+    initialize_ai_state()
 
 
 def navigate(page: str) -> None:
@@ -95,12 +99,28 @@ def sidebar() -> None:
         else:
             st.info(t("unlock_message"))
         st.caption(t("local_stack"))
+        st.markdown("---")
+        render_ai_sidebar()
 
 
 def current_report() -> InnovationReport | None:
     """Return the active report from session state."""
     report = st.session_state.get("report")
     return report if isinstance(report, InnovationReport) else None
+
+
+def ai_insight_prompt(report: InnovationReport) -> str:
+    """Build a reusable prompt for AI-powered governance insights."""
+    return (
+        "You are a public-sector governance analyst. "
+        "Provide a concise policy and implementation insight for the following challenge. "
+        f"Problem: {report.problem.text}\n"
+        f"Location: {report.problem.location}\n"
+        f"Sector: {report.problem.sector}\n"
+        f"Target population: {report.problem.target_population}\n"
+        f"Summary: {report.summary}\n"
+        f"Recommendations: {len(report.recommendations)} options."
+    )
 
 
 def selected_language() -> str:
@@ -189,6 +209,7 @@ def render_upload() -> None:
             st.write(t("processing_score"))
             status.update(label=t("analysis_complete"), state="complete")
         st.session_state.report = report
+        st.session_state.ai_insight = ""
         st.success(t("created_report", report_id=report.report_id))
         if st.button(t("open_analysis"), type="primary"):
             navigate("AI Analysis")
@@ -218,10 +239,18 @@ def render_analysis() -> None:
     cols[0].metric(t("readiness"), f"{report.analysis.readiness_score}/100")
     cols[1].metric(t("urgency"), f"{report.analysis.urgency_score}/100")
     cols[2].metric(t("evidence_matched"), len(report.evidence))
+    if st.session_state.ai_inference_mode == "Local Ollama":
+        st.info(
+            f"Using Local AI · {st.session_state.ai_ollama_model} @ "
+            f"{st.session_state.ai_ollama_endpoint}"
+        )
+    else:
+        st.info(f"Using Cloud AI Provider · {st.session_state.ai_cloud_provider}")
     st.markdown(
         f'<div class="glass-card">{escape(report.summary)}</div>',
         unsafe_allow_html=True,
     )
+    _render_ai_insight_card(report)
     left, right = st.columns(2)
     with left:
         st.markdown(f"### {t('core_challenges')}")
@@ -262,6 +291,36 @@ def render_analysis() -> None:
             for evidence in rows:
                 st.markdown(f"**{evidence.title}** - {evidence.relevance:.0%} match")
                 st.caption(f"{evidence.summary} | {evidence.source}")
+
+
+def _render_ai_insight_card(report: InnovationReport) -> None:
+    """Render an optional AI governance insight section."""
+    st.markdown("### AI Governance Insight")
+    if st.button("Generate AI insight", key="ai_insight_button"):
+        try:
+            prompt = ai_insight_prompt(report)
+            if st.session_state.ai_inference_mode == "Local Ollama":
+                insight = generate_with_ollama(
+                    prompt,
+                    model=st.session_state.ai_ollama_model,
+                    endpoint=st.session_state.ai_ollama_endpoint,
+                )
+            else:
+                insight = generate_response(
+                    prompt,
+                    provider=st.session_state.ai_cloud_provider,
+                    api_key=st.session_state.ai_api_key,
+                )
+            st.session_state.ai_insight = insight
+            # pylint: disable=broad-exception-caught
+        except Exception as exc:
+            st.error(str(exc))
+    if st.session_state.ai_insight:
+        st.markdown(st.session_state.ai_insight)
+    else:
+        st.info(
+            "Generate a short AI-powered governance insight for the current report."
+        )
 
 
 def render_recommendations() -> None:
