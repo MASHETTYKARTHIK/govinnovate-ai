@@ -1,4 +1,3 @@
-```yaml id="y5ob8q"
 stages:
   - lint
   - test
@@ -15,4 +14,3 @@ test:
   stage: test
   script:
     - echo "Test stage running"
-```
