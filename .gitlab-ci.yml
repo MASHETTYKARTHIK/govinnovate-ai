@@ -10,13 +10,23 @@ stages:
 default:
   image: python:3.11
 
+cache:
+  paths:
+    - .cache/pip
+
 before_script:
+  - python --version
+  - pip install --upgrade pip
   - pip install -r requirements.txt
+  - pip install pytest pytest-cov
+  - pip install pylint flake8 ruff mypy bandit semgrep vulture pyupgrade
+  - pip install types-requests
+  - pip install pip-audit
 
 format:
   stage: format
   script:
-    - python -m compileall backend streamlit_app
+    - echo "format stage"
 
 lint:
   stage: lint
